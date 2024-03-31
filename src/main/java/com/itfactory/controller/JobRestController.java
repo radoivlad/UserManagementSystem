@@ -43,11 +43,11 @@ public class JobRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getJobById(@PathVariable int id) {
+    public ResponseEntity<String> getJobById(@PathVariable String id) {
         try{
-            Job job = jobService.getJobById(id);
+            Job job = jobService.getJobById(Integer.parseInt(id));
             return ResponseEntity.status(HttpStatus.OK).body("Job retrieved by id successfully: " + "\n" + job);
-        } catch (DatabaseOperationException e) {
+        } catch (DatabaseOperationException | NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get job by id: " + e.getMessage());
         }
     }
@@ -75,21 +75,21 @@ public class JobRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteJob(@PathVariable int id){
+    public ResponseEntity<String> deleteJob(@PathVariable String id){
         try{
-            jobService.deleteJob(id);
+            jobService.deleteJob(Integer.parseInt(id));
             return ResponseEntity.status(HttpStatus.OK).body("Job deleted successfully.");
-        } catch (DatabaseOperationException e) {
+        } catch (DatabaseOperationException | NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete job: " + e.getMessage());
         }
     }
 
     @PutMapping("/{id}/{baseSalary}")
-    public ResponseEntity<String> updateBaseSalary(@PathVariable int id, @PathVariable double baseSalary){
+    public ResponseEntity<String> updateBaseSalary(@PathVariable String id, @PathVariable String baseSalary){
         try{
-            jobService.updateBaseSalary(id, baseSalary);
+            jobService.updateBaseSalary(Integer.parseInt(id), Double.parseDouble(baseSalary));
             return ResponseEntity.status(HttpStatus.OK).body("Job base salary updated successfully.");
-        } catch (DatabaseOperationException e) {
+        } catch (DatabaseOperationException | NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to update job base salary: " + e.getMessage());
         }

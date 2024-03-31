@@ -8,7 +8,8 @@ import com.itfactory.console.InteractiveConsole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
+
+import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,11 +47,11 @@ public class PersonRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getPersonById(@PathVariable int id){
+    public ResponseEntity<String> getPersonById(@PathVariable String id){
         try {
-            Person person = personService.getPersonById(id);
+            Person person = personService.getPersonById(Integer.parseInt(id));
             return ResponseEntity.status(HttpStatus.OK).body("Person retrieved by id successfully: " + "\n" + person);
-        } catch (DatabaseOperationException e) {
+        } catch (DatabaseOperationException | NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get person by id: " + e.getMessage());
         }
     }
@@ -61,7 +62,7 @@ public class PersonRestController {
             personService.insertPerson(person);
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Person inserted successfully.");
-        } catch (DatabaseOperationException | HttpMessageNotReadableException e) {
+        } catch (DatabaseOperationException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to insert person: " + e.getMessage());
         }
@@ -81,56 +82,56 @@ public class PersonRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePerson(@PathVariable int id){
+    public ResponseEntity<String> deletePerson(@PathVariable String id){
         try {
-            personService.deletePerson(id);
+            personService.deletePerson(Integer.parseInt(id));
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Person deleted successfully");
-        } catch (DatabaseOperationException e) {
+        } catch (DatabaseOperationException | NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to delete person: " + e.getMessage());
         }
     }
 
     @PutMapping("/{id}/{salaryIndex}")
-    public ResponseEntity<String> updateSalaryIndex(@PathVariable int id, @PathVariable double salaryIndex){
+    public ResponseEntity<String> updateSalaryIndex(@PathVariable String id, @PathVariable String salaryIndex){
         try {
-            personService.updateSalaryIndex(id, salaryIndex);
+            personService.updateSalaryIndex(Integer.parseInt(id), Double.parseDouble(salaryIndex));
             return ResponseEntity.status(HttpStatus.OK).body("Person's salary index updated successfully");
-        } catch (DatabaseOperationException e) {
+        } catch (DatabaseOperationException | NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to update person's salary index: " + e.getMessage());
         }
     }
 
     @GetMapping("/{id}/job")
-    public ResponseEntity<String> getPersonJob(@PathVariable int id){
+    public ResponseEntity<String> getPersonJob(@PathVariable String id){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(personService.getPersonById(id).getName()
-                    + "'s job retrieved successfully:" + "\n" + personService.getPersonJob(id));
-        } catch (DatabaseOperationException e) {
+            return ResponseEntity.status(HttpStatus.OK).body(personService.getPersonById(Integer.parseInt(id)).getName()
+                    + "'s job retrieved successfully:" + "\n" + personService.getPersonJob(Integer.parseInt(id)));
+        } catch (DatabaseOperationException | NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     "Failed to retrieve person's job: " + e.getMessage());
         }
     }
 
     @GetMapping("/{id}/salary")
-    public ResponseEntity<String> getPersonSalary(@PathVariable int id) throws DatabaseOperationException {
+    public ResponseEntity<String> getPersonSalary(@PathVariable String id) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(personService.getPersonById(id).getName()
-                    + "'s salary retrieved successfully: " + personService.getPersonSalary(id));
-        } catch (DatabaseOperationException e) {
+            return ResponseEntity.status(HttpStatus.OK).body(personService.getPersonById(Integer.parseInt(id)).getName()
+                    + "'s salary retrieved successfully: " + personService.getPersonSalary(Integer.parseInt(id)));
+        } catch (DatabaseOperationException | NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     "Failed to retrieve person's salary: " + e.getMessage());
         }
     }
 
     @GetMapping("/{id}/workexperience")
-    public ResponseEntity<String> getPersonWorkExperience(@PathVariable int id) throws DatabaseOperationException {
+    public ResponseEntity<String> getPersonWorkExperience(@PathVariable String id) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(personService.getPersonById(id).getName()
-                    + "'s work experience retrieved successfully: " + personService.getPersonWorkExperience(id));
-        } catch (DatabaseOperationException e) {
+            return ResponseEntity.status(HttpStatus.OK).body(personService.getPersonById(Integer.parseInt(id)).getName()
+                    + "'s work experience retrieved successfully: " + personService.getPersonWorkExperience(Integer.parseInt(id)));
+        } catch (DatabaseOperationException | NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     "Failed to retrieve person's work experience: " + e.getMessage());
         }

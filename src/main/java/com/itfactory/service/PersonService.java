@@ -43,8 +43,7 @@ public class PersonService {
 
     public void insertPerson(Person person) throws DatabaseOperationException {
 
-        if(person.getSalaryIndex() < 1.0 || person.getSalaryIndex() > 3.0) throw new DatabaseOperationException(
-                "Invalid Input for Salary Index - Please specify a value from 1 to 3!");
+        validateInsertPersonInput(person);
         personDao.insertPerson(person);
     }
 
@@ -61,12 +60,7 @@ public class PersonService {
 
     public Person updateSalaryIndex(int id, double salaryIndex) throws DatabaseOperationException {
 
-        if(getPersonById(id).getSalaryIndex() == salaryIndex) {
-            throw new DatabaseOperationException(
-                    "Person's salary index is already " + salaryIndex);
-        }
-        if(salaryIndex < 1.0 || salaryIndex > 3.0) throw new DatabaseOperationException(
-                "Invalid Input for Salary Index - Please specify a value from 1 to 3!");
+        validateUpdateSalaryIndexInput(id, salaryIndex);
         return personDao.updateSalaryIndex(id, salaryIndex);
     }
 
@@ -83,5 +77,31 @@ public class PersonService {
     public String getPersonWorkExperience(int id) throws DatabaseOperationException {
 
         return new PersonManager(getPersonById(id)).getWorkExperience();
+    }
+
+    private static void validateInsertPersonInput (Person person) throws DatabaseOperationException {
+
+        try {
+
+            if (!person.getName().matches("[a-zA-Z]+") || !person.getEmail().matches("[a-zA-Z]+")) {
+                throw new DatabaseOperationException("Please enter letters for name or email!");
+            }
+            if (person.getSalaryIndex() < 1.0 || person.getSalaryIndex() > 3.0) {
+                throw new DatabaseOperationException(
+                        "Invalid Input for Salary Index - Please specify a value from 1 to 3!");
+            }
+        } catch(DatabaseOperationException | NumberFormatException e) {
+            throw new DatabaseOperationException(e.getMessage());
+        }
+    }
+
+    private void validateUpdateSalaryIndexInput (int id, double salaryIndex) throws DatabaseOperationException {
+
+        if(getPersonById(id).getSalaryIndex() == salaryIndex) {
+            throw new DatabaseOperationException(
+                    "Person's salary index is already " + salaryIndex);
+        }
+        if(salaryIndex < 1.0 || salaryIndex > 3.0) throw new DatabaseOperationException(
+                "Invalid Input for Salary Index - Please specify a value from 1 to 3!");
     }
 }

@@ -36,8 +36,7 @@ public class JobService {
 
     public void insertJob(Job job) throws DatabaseOperationException {
 
-        if(job.getBaseSalary() < 500) throw new DatabaseOperationException(
-                "Invalid Input for Base Salary - Please specify a value greater than 500!");
+        validateInsertJobInput(job);
         jobDao.insertJob(job);
     }
 
@@ -54,10 +53,7 @@ public class JobService {
 
     public Job updateBaseSalary(int id, double baseSalary) throws DatabaseOperationException {
 
-        if(getJobById(id).getBaseSalary() == baseSalary) throw new DatabaseOperationException(
-                "Job base salary is already: " + baseSalary);
-        if(baseSalary < 500) throw new DatabaseOperationException(
-                "Invalid Input for Base Salary - Please specify a value greater than 500!");
+        validateUpdateBaseSalaryInput(id, baseSalary);
         return jobDao.updateBaseSalary(id, baseSalary);
     }
 
@@ -65,5 +61,31 @@ public class JobService {
 
         System.out.println(person.getName() + "'s salary is: " + person.getSalaryIndex() * job.getBaseSalary());
         return person.getSalaryIndex() * job.getBaseSalary();
+    }
+
+    private static void validateInsertJobInput (Job job) throws DatabaseOperationException {
+
+        try {
+
+            if (!job.getName().matches("[a-zA-Z]+") || !job.getDomain().matches("[a-zA-Z]+")) {
+                throw new DatabaseOperationException("Please enter letters for name or email!");
+            }
+            if (job.getBaseSalary() < 500) {
+                throw new DatabaseOperationException(
+                        "Invalid Input for Base Salary - Please specify a value greater than 500!");
+            }
+        } catch(DatabaseOperationException | NumberFormatException e) {
+            throw new DatabaseOperationException(e.getMessage());
+        }
+    }
+
+    private void validateUpdateBaseSalaryInput (int id, double baseSalary) throws DatabaseOperationException {
+
+        if(getJobById(id).getBaseSalary() == baseSalary) {
+            throw new DatabaseOperationException(
+                    "Job base salary is already: " + baseSalary);
+        }
+        if(baseSalary < 500) throw new DatabaseOperationException(
+                "Invalid Input for Base Salary - Please specify a value greater than 500!");
     }
 }
