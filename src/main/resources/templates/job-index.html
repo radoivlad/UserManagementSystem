@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Job Database Manipulation Section</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+
+<style>
+
+    .jumbotron {
+    background-color: #6DB33F;
+       margin-bottom: 30px;
+       height: 150px;
+      padding-top: 12px;
+      color: white;
+    }
+    #additional {
+       margin-bottom: 20px;
+    }
+
+</style>
+
+<body>
+
+    <!-- Jumbotron div -->
+    <div class="jumbotron text-center full-width align-items-center">
+        <div class="row">
+            <div class="col">
+                <div class="container justify-content-center align-items-center">
+                    <h1 class="display-4"><strong>Job Database</strong></h1>
+                    <p class="lead">Welcome to Job Database Manipulation Section!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Central row div - contains 2 columns (6 spaces each) -->
+    <div class="container">
+
+        <div class="row" style="margin-bottom: 20px">
+
+            <!-- First column -->
+           <div class="col-md-6">
+               <h3>GET:</h3>
+
+               <a th:href="@{/job/all}" class="btn btn-success">Get All Jobs</a>
+               <p>Display all database entries</p>
+               <hr>
+               <h6>Using a job id, additional information can be retrieved (adding specific endpoint):</h6>
+                   <ul>
+                       <li><strong>/*id*</strong> - receive data of a specific job, identified by id;</li>
+                   </ul>
+           </div>
+
+            <!-- Second column -->
+            <div class="col-md-6">
+                <h6 id="additional">Activate interactive console (or use Postman) to perform additional operations in 'job' database, such as:</h6>
+                <h5>POST:</h5>
+                    <ul>
+                        <li>add a new job, insert information: id, name, domain and base salary;</li>
+                    </ul>
+                <hr>
+                <h5>PUT:</h5>
+                    <ul>
+                        <li><strong>/*id*/*baseSalary*</strong> - insert a specific job id, and a new base salary, to update it;</li>
+                    </ul>
+                <hr>
+                <h5>DELETE:</h5>
+                    <ul>
+                        <li><strong>/*id*</strong> - delete a specific job from the database, inputting id;</li>
+                    </ul>
+
+            </div>
+
+        </div>
+        <hr>
+    </div>
+
+
+
+    <!-- Bottom div - console -->
+    <div style="text-align: center">
+
+        <h3>Job Interactive Console:</h3>
+        <a th:href="@{/job/menu}" class="btn btn-success" onclick="showMenuMessage()">Activate Console</a>
+                    <p>Display interactive console menu</p>
+        <p id="menuMessage" style="display: none; color: green;">Menu activated successfully</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Spring_Boot.svg/800px-Spring_Boot.svg.png"
+             style="height:40px"/>
+
+    </div>
+
+    <!-- JS function - menu activated -->
+    <script th:inline="javascript">
+        function showMenuMessage() {
+            document.getElementById('menuMessage').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Person Database Manipulation Section</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<style>
+
+    .jumbotron {
+    background-color: #6DB33F;
+       margin-bottom: 30px;
+       height: 150px;
+      padding-top: 12px;
+      color: white;
+    }
+    #additional {
+       margin-bottom: 20px;
+    }
+
+</style>
+
+<body>
+
+    <!-- Jumbotron div -->
+    <div class="jumbotron text-center full-width align-items-center" >
+        <div class="row">
+            <div class="col">
+                <div class="container justify-content-center align-items-center">
+                    <h1 class="display-4"><strong>Person Database</strong></h1>
+                    <p class="lead">Welcome to Person Database Manipulation Section!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Central row div - contains 2 columns (6 spaces each) -->
+    <div class="container">
+
+        <div class="row" style="margin-bottom: 20px">
+
+            <!-- First column -->
+           <div class="col-md-6">
+
+               <h3>GET:</h3>
+               <a th:href="@{/person/all}" class="btn btn-success">Get All Persons</a>
+               <p>Display all database entries</p>
+               <hr>
+               <h6>Using a person's id, additional information can be retrieved (adding specific endpoint):</h6>
+                    <ul>
+                        <li><strong>/id</strong> - receive data of a specific person, identified by id</li>
+                        <li><strong>/id/job</strong> - receive data of a specific person's job details</li>
+                        <li><strong>/id/salary</strong> - receive data of a specific person's salary</li>
+                        <li><strong>/id/workexperience</strong> - receive data of a specific person's work experience</li>
+                    </ul>
+
+           </div>
+
+            <!-- Second column -->
+            <div class="col-md-6">
+
+                <h6 id="additional">Activate interactive console (or use Postman) to perform additional operations in 'person' database, such as:</h6>
+                <h5>POST:</h5>
+                    <ul>
+                        <li>add a new person, insert: id, name, email, jobId and salaryIndex</li>
+                    </ul>
+                <hr>
+                <h5>PUT:</h5>
+                    <ul>
+                        <li><strong>/id/salaryIndex</strong> - insert a person id, and a new salary index, to have it updated</li>
+                    </ul>
+                <hr>
+                <h5>DELETE:</h5>
+                    <ul>
+                        <li><strong>/id</strong> - delete a specific person from the database, inputting id</li>
+                    </ul>
+
+            </div>
+
+        </div>
+        <hr>
+    </div>
+
+    <!-- Bottom div - console -->
+    <div style="text-align: center">
+
+        <h3>Person Interactive Console:</h3>
+        <a th:href="@{/person/menu}" class="btn btn-success" onclick="showMenuMessage()">Activate Console</a>
+                    <p>Display interactive console menu</p>
+        <p id="menuMessage" style="display: none; color: green;">Menu activated successfully</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Spring_Boot.svg/800px-Spring_Boot.svg.png"
+             style="height:40px"/>
+
+    </div>
+
+    <!-- JS function - menu activated -->
+    <script th:inline="javascript">
+        function showMenuMessage() {
+            document.getElementById('menuMessage').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
