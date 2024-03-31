@@ -27,11 +27,11 @@ class PersonRestControllerTest {
 
         int existentId = PersonDaoTest.generateExistentTestId();
 
-        assertDoesNotThrow(() -> personRestController.getPersonById(existentId));
+        assertDoesNotThrow(() -> personRestController.getPersonById(String.valueOf(existentId)));
 
-        assertTrue(personRestController.getPersonById(existentId).toString().contains("successfully"));
+        assertTrue(personRestController.getPersonById(String.valueOf(existentId)).toString().contains("successfully"));
 
-        assertTrue(personRestController.getPersonById(PersonDaoTest.generateInvalidTestId()).toString().contains("Failed"));
+        assertTrue(personRestController.getPersonById(String.valueOf(PersonDaoTest.generateInvalidTestId())).toString().contains("Failed"));
     }
 
     @Test
@@ -40,14 +40,15 @@ class PersonRestControllerTest {
         Person testPerson = new Person();
         testPerson.setId(PersonDaoTest.generateInvalidTestId());
         testPerson.setName("Test Person");
+        testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
 
         personRestController.insertPerson(testPerson);
 
-        assertTrue(personRestController.deletePerson(testPerson.getId()).toString().contains("successfully"));
-        assertTrue(personRestController.getPersonById(testPerson.getId()).toString().contains("Failed"));
+        assertTrue(personRestController.deletePerson(String.valueOf(testPerson.getId())).toString().contains("successfully"));
+        assertTrue(personRestController.getPersonById(String.valueOf(testPerson.getId())).toString().contains("Failed"));
 
-        assertTrue(personRestController.deletePerson(testPerson.getId()).toString().contains("Failed"));
+        assertTrue(personRestController.deletePerson(String.valueOf(testPerson.getId())).toString().contains("Failed"));
     }
 
     @Test
@@ -55,20 +56,22 @@ class PersonRestControllerTest {
 
         Person testPerson1 = new Person();
         testPerson1.setId(PersonDaoTest.generateInvalidTestId());
-        testPerson1.setName("Test Person1");
+        testPerson1.setName("Test Person One");
+        testPerson1.setEmail("Test Email");
         testPerson1.setJobId(JobDaoTest.generateExistentTestId());
         personRestController.insertPerson(testPerson1);
 
         Person testPerson2 = new Person();
         testPerson2.setId(PersonDaoTest.generateInvalidTestId());
-        testPerson2.setName("Test Person2");
+        testPerson2.setName("Test Person Two");
+        testPerson2.setEmail("Test Email");
         testPerson2.setJobId(JobDaoTest.generateExistentTestId());
         personRestController.insertPerson(testPerson2);
 
         assertTrue(personRestController.getAllPersons().toString().contains("successfully"));
 
-        personRestController.deletePerson(testPerson1.getId());
-        personRestController.deletePerson(testPerson2.getId());
+        personRestController.deletePerson(String.valueOf(testPerson1.getId()));
+        personRestController.deletePerson(String.valueOf(testPerson2.getId()));
     }
 
     @Test
@@ -77,13 +80,14 @@ class PersonRestControllerTest {
         Person testPerson = new Person();
         testPerson.setId(PersonDaoTest.generateInvalidTestId());
         testPerson.setName("Test Person");
+        testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
 
         assertTrue(personRestController.insertPerson(testPerson).toString().contains("successfully"));
 
         assertTrue(personRestController.insertPerson(testPerson).toString().contains("Failed"));
 
-        personRestController.deletePerson(testPerson.getId());
+        personRestController.deletePerson(String.valueOf(testPerson.getId()));
     }
 
     @Test
@@ -92,21 +96,22 @@ class PersonRestControllerTest {
         Person testPerson = new Person();
         testPerson.setId(PersonDaoTest.generateInvalidTestId());
         testPerson.setName("Test Person");
+        testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
         testPerson.setSalaryIndex(2);
         double newSalaryIndex = 2.5;
 
         personRestController.insertPerson(testPerson);
 
-        assertTrue(personRestController.updateSalaryIndex(testPerson.getId(), newSalaryIndex)
+        assertTrue(personRestController.updateSalaryIndex(String.valueOf(testPerson.getId()), String.valueOf(newSalaryIndex))
                 .toString().contains("successfully"));
 
-        assertTrue(personRestController.updateSalaryIndex(testPerson.getId(), newSalaryIndex)
+        assertTrue(personRestController.updateSalaryIndex(String.valueOf(testPerson.getId()), String.valueOf(newSalaryIndex))
                 .toString().contains("Failed"));
 
-        personRestController.deletePerson(testPerson.getId());
+        personRestController.deletePerson(String.valueOf(testPerson.getId()));
 
-        assertTrue(personRestController.updateSalaryIndex(testPerson.getId(), newSalaryIndex)
+        assertTrue(personRestController.updateSalaryIndex(String.valueOf(testPerson.getId()), String.valueOf(newSalaryIndex))
                 .toString().contains("Failed"));
     }
 
@@ -116,15 +121,16 @@ class PersonRestControllerTest {
         Person testPerson = new Person();
         testPerson.setId(PersonDaoTest.generateInvalidTestId());
         testPerson.setName("Test Person");
+        testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
 
         personRestController.insertPerson(testPerson);
 
-        assertTrue(personRestController.getPersonJob(testPerson.getId()).toString().contains("successfully"));
+        assertTrue(personRestController.getPersonJob(String.valueOf(testPerson.getId())).toString().contains("successfully"));
 
-        personRestController.deletePerson(testPerson.getId());
+        personRestController.deletePerson(String.valueOf(testPerson.getId()));
 
-        assertTrue(personRestController.getPersonJob(testPerson.getId()).toString().contains("Failed"));
+        assertTrue(personRestController.getPersonJob(String.valueOf(testPerson.getId())).toString().contains("Failed"));
     }
 
     @Test
@@ -133,15 +139,16 @@ class PersonRestControllerTest {
         Person testPerson = new Person();
         testPerson.setId(PersonDaoTest.generateInvalidTestId());
         testPerson.setName("Test Person");
+        testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
 
         personRestController.insertPerson(testPerson);
 
-        assertTrue(personRestController.getPersonSalary(testPerson.getId()).toString().contains("successfully"));
+        assertTrue(personRestController.getPersonSalary(String.valueOf(testPerson.getId())).toString().contains("successfully"));
 
-        personRestController.deletePerson(testPerson.getId());
+        personRestController.deletePerson(String.valueOf(testPerson.getId()));
 
-        assertTrue(personRestController.getPersonSalary(testPerson.getId()).toString().contains("Failed"));
+        assertTrue(personRestController.getPersonSalary(String.valueOf(testPerson.getId())).toString().contains("Failed"));
     }
 
     @Test
@@ -150,14 +157,15 @@ class PersonRestControllerTest {
         Person testPerson = new Person();
         testPerson.setId(PersonDaoTest.generateInvalidTestId());
         testPerson.setName("Test Person");
+        testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
 
         personRestController.insertPerson(testPerson);
 
-        assertTrue(personRestController.getPersonWorkExperience(testPerson.getId()).toString().contains("successfully"));
+        assertTrue(personRestController.getPersonWorkExperience(String.valueOf(testPerson.getId())).toString().contains("successfully"));
 
-        personRestController.deletePerson(testPerson.getId());
+        personRestController.deletePerson(String.valueOf(testPerson.getId()));
 
-        assertTrue(personRestController.getPersonWorkExperience(testPerson.getId()).toString().contains("Failed"));
+        assertTrue(personRestController.getPersonWorkExperience(String.valueOf(testPerson.getId())).toString().contains("Failed"));
     }
 }

@@ -53,6 +53,7 @@ public class PersonServiceTest {
         Person testPerson = new Person();
         testPerson.setId(PersonDaoTest.generateInvalidTestId());
         testPerson.setName("Test Person");
+        testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
 
         personService.insertPerson(testPerson);
@@ -77,13 +78,15 @@ public class PersonServiceTest {
 
         Person testPerson1 = new Person();
         testPerson1.setId(PersonDaoTest.generateInvalidTestId());
-        testPerson1.setName("Test Person1");
+        testPerson1.setName("Test Person One");
+        testPerson1.setEmail("Test Email");
         testPerson1.setJobId(JobDaoTest.generateExistentTestId());
         personService.insertPerson(testPerson1);
 
         Person testPerson2 = new Person();
         testPerson2.setId(PersonDaoTest.generateInvalidTestId());
-        testPerson2.setName("Test Person2");
+        testPerson2.setName("Test Person Two");
+        testPerson2.setEmail("Test Email");
         testPerson2.setJobId(JobDaoTest.generateExistentTestId());
         personService.insertPerson(testPerson2);
 
@@ -134,6 +137,7 @@ public class PersonServiceTest {
         Person testPerson = new Person();
         testPerson.setId(PersonDaoTest.generateInvalidTestId());
         testPerson.setName("Test Person");
+        testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
         testPerson.setSalaryIndex(2);
         double newSalaryIndex = 2.5;
@@ -156,6 +160,8 @@ public class PersonServiceTest {
 
         Person testPerson = new Person();
         testPerson.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson.setName("Test Person");
+        testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
         testPerson.setSalaryIndex(2.0);
 

@@ -27,11 +27,11 @@ class JobRestControllerTest {
 
         int existentId = JobDaoTest.generateExistentTestId();
 
-        assertDoesNotThrow(() -> jobRestController.getJobById(existentId));
+        assertDoesNotThrow(() -> jobRestController.getJobById(String.valueOf(existentId)));
 
-        assertTrue(jobRestController.getJobById(existentId).toString().contains("successfully"));
+        assertTrue(jobRestController.getJobById(String.valueOf(existentId)).toString().contains("successfully"));
 
-        assertTrue(jobRestController.getJobById(PersonDaoTest.generateInvalidTestId()).toString().contains("Failed"));
+        assertTrue(jobRestController.getJobById(String.valueOf(PersonDaoTest.generateInvalidTestId())).toString().contains("Failed"));
     }
 
     @Test
@@ -40,13 +40,15 @@ class JobRestControllerTest {
         Job testJob = new Job();
         testJob.setId(JobDaoTest.generateInvalidTestId());
         testJob.setName("Test Job");
+        testJob.setDomain("Test Domain");
+        testJob.setBaseSalary(2000);
 
         jobRestController.insertJob(testJob);
 
-        assertTrue(jobRestController.deleteJob(testJob.getId()).toString().contains("successfully"));
-        assertTrue(jobRestController.getJobById(testJob.getId()).toString().contains("Failed"));
+        assertTrue(jobRestController.deleteJob(String.valueOf(testJob.getId())).toString().contains("successfully"));
+        assertTrue(jobRestController.getJobById(String.valueOf(testJob.getId())).toString().contains("Failed"));
 
-        assertTrue(jobRestController.deleteJob(testJob.getId()).toString().contains("Failed"));
+        assertTrue(jobRestController.deleteJob(String.valueOf(testJob.getId())).toString().contains("Failed"));
     }
 
     @Test
@@ -54,18 +56,20 @@ class JobRestControllerTest {
 
         Job testJob1 = new Job();
         testJob1.setId(JobDaoTest.generateInvalidTestId());
-        testJob1.setName("Test Job1");
+        testJob1.setName("Test Job One");
+        testJob1.setDomain("Test Domain");
         jobRestController.insertJob(testJob1);
 
         Job testJob2 = new Job();
         testJob2.setId(JobDaoTest.generateInvalidTestId());
-        testJob2.setName("Test Job2");
+        testJob2.setName("Test Job Two");
+        testJob2.setDomain("Test Domain");
         jobRestController.insertJob(testJob2);
 
         assertTrue(jobRestController.getAllJobs().toString().contains("successfully"));
 
-        jobRestController.deleteJob(testJob1.getId());
-        jobRestController.deleteJob(testJob2.getId());
+        jobRestController.deleteJob(String.valueOf(testJob1.getId()));
+        jobRestController.deleteJob(String.valueOf(testJob2.getId()));
     }
 
     @Test
@@ -74,12 +78,14 @@ class JobRestControllerTest {
         Job testJob = new Job();
         testJob.setId(JobDaoTest.generateInvalidTestId());
         testJob.setName("Test Job");
+        testJob.setDomain("Test Domain");
+        testJob.setBaseSalary(2000);
 
         assertTrue(jobRestController.insertJob(testJob).toString().contains("successfully"));
 
         assertTrue(jobRestController.insertJob(testJob).toString().contains("Failed"));
 
-        jobRestController.deleteJob(testJob.getId());
+        jobRestController.deleteJob(String.valueOf(testJob.getId()));
     }
 
     @Test
@@ -88,20 +94,21 @@ class JobRestControllerTest {
         Job testJob = new Job();
         testJob.setId(JobDaoTest.generateInvalidTestId());
         testJob.setName("Test Job");
+        testJob.setDomain("Test Domain");
         testJob.setBaseSalary(2000);
         double newBaseSalary = 2500;
 
         jobRestController.insertJob(testJob);
 
-        assertTrue(jobRestController.updateBaseSalary(testJob.getId(), newBaseSalary)
+        assertTrue(jobRestController.updateBaseSalary(String.valueOf(testJob.getId()), String.valueOf(newBaseSalary))
                 .toString().contains("successfully"));
 
-        assertTrue(jobRestController.updateBaseSalary(testJob.getId(), newBaseSalary)
+        assertTrue(jobRestController.updateBaseSalary(String.valueOf(testJob.getId()), String.valueOf(newBaseSalary))
                 .toString().contains("Failed"));
 
-        jobRestController.deleteJob(testJob.getId());
+        jobRestController.deleteJob(String.valueOf(testJob.getId()));
 
-        assertTrue(jobRestController.updateBaseSalary(testJob.getId(), newBaseSalary)
+        assertTrue(jobRestController.updateBaseSalary(String.valueOf(testJob.getId()), String.valueOf(newBaseSalary))
                 .toString().contains("Failed"));
     }
 

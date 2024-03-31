@@ -55,6 +55,7 @@ public class JobServiceTest {
         Job testJob = new Job();
         testJob.setId(JobDaoTest.generateInvalidTestId());
         testJob.setName("Test Job");
+        testJob.setDomain("Test Domain");
 
         jobService.insertJob(testJob);
 
@@ -78,12 +79,14 @@ public class JobServiceTest {
 
         Job testJob1 = new Job();
         testJob1.setId(JobDaoTest.generateInvalidTestId());
-        testJob1.setName("Test Job1");
+        testJob1.setName("Test Job One");
+        testJob1.setDomain("Test Domain");
         jobService.insertJob(testJob1);
 
         Job testJob2 = new Job();
         testJob2.setId(JobDaoTest.generateInvalidTestId());
-        testJob2.setName("Test Job2");
+        testJob2.setName("Test Job Two");
+        testJob2.setDomain("Test Domain");
         jobService.insertJob(testJob2);
 
         List<Job> testJobsInserted = jobService.getAllJobs();
@@ -131,6 +134,7 @@ public class JobServiceTest {
         Job testJob = new Job();
         testJob.setId(JobDaoTest.generateInvalidTestId());
         testJob.setName("Test Job");
+        testJob.setDomain("Test Domain");
         testJob.setBaseSalary(1000);
         double newBaseSalary = 2000;
 
@@ -153,6 +157,7 @@ public class JobServiceTest {
         Job testJob = new Job();
         testJob.setId(JobDaoTest.generateInvalidTestId());
         testJob.setName("Test Job");
+        testJob.setDomain("Test Domain");
         testJob.setBaseSalary(2000);
 
         jobService.insertJob(testJob);

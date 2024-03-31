@@ -67,7 +67,7 @@ public class JobService {
 
         try {
 
-            if (!job.getName().matches("[a-zA-Z]+") || !job.getDomain().matches("[a-zA-Z]+")) {
+            if (!job.getName().matches("[a-zA-Z\\s]+") || !job.getDomain().matches("[a-zA-Z\\s]+")) {
                 throw new DatabaseOperationException("Please enter letters for name or email!");
             }
             if (job.getBaseSalary() < 500) {

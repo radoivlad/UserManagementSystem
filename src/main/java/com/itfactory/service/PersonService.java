@@ -83,7 +83,7 @@ public class PersonService {
 
         try {
 
-            if (!person.getName().matches("[a-zA-Z]+") || !person.getEmail().matches("[a-zA-Z]+")) {
+            if (!person.getName().matches("[a-zA-Z\\s]+") || !person.getEmail().matches("[a-zA-Z\\s@.]+")) {
                 throw new DatabaseOperationException("Please enter letters for name or email!");
             }
             if (person.getSalaryIndex() < 1.0 || person.getSalaryIndex() > 3.0) {
