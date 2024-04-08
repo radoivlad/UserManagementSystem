@@ -1,6 +1,5 @@
 package com.itfactory.dao;
 
-import com.itfactory.exceptions.InvalidReadValueException;
 import com.itfactory.model.Person;
 
 import com.itfactory.exceptions.DatabaseOperationException;
@@ -15,27 +14,27 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Writing JUnit tests for each of the 5 database manipulation methods (CRUD) in PersonDAO class;
- * Included - connection test;
+ * Writing JUnit INTEGRATION tests for each of the 5 database manipulation methods (CRUD) in PersonDAO class;
+ * Included - connection test and invalid scenarios;
  * Using static helper methods to generate existent and non-existent database id;
  */
 
 @SpringBootTest
-public class PersonDaoTest {
+public class PersonDaoIntegrationTest {
 
     //injecting by @Autowired - the PersonDao object, used in each test;
     @Autowired
-    PersonDao personDao;
+    private PersonDao personDao;
 
     //every test assumes a test person or test id, which is subjected to the respective database manipulation method;
 
     //generate valid id, verify successful extraction (does not throw exception, not null result, equivalent id);
+    //invalid scenario - extract using invalid id - throws exception;
     @Test
-    public void findPersonByIdTest() throws DatabaseOperationException {
+    public void getPersonByIdTest() throws DatabaseOperationException {
 
         int existentId = generateExistentTestId();
 
@@ -46,8 +45,15 @@ public class PersonDaoTest {
         assertNotNull(foundTestPersonById);
         assertEquals(existentId, foundTestPersonById.getId());
     }
+    @Test
+    public void getPersonByIdInvalidTest() {
+
+        assertThrows(DatabaseOperationException.class,
+                () -> personDao.getPersonById(generateInvalidTestId()));
+    }
 
     //generate person, insert, delete, verify successful removal (a subsequent extraction throws exception);
+    //invalid scenario - delete using invalid id - throws exception;
     @Test
     public void deletePersonTest() throws DatabaseOperationException {
 
@@ -64,7 +70,14 @@ public class PersonDaoTest {
                 () -> personDao.getPersonById(testPerson.getId()));
     }
 
-    //generate persons, extract all persons, verify successful extraction (not null result, new list size increased accordingly);
+    @Test
+    public void deletePersonInvalidTest() {
+
+        assertThrows(DatabaseOperationException.class,
+                () -> personDao.deletePerson(generateInvalidTestId()));
+    }
+
+    //generate persons, insert, extract all persons, verify successful extraction (not null result, new list size increased accordingly);
     @Test
     public void getAllPersonsTest() throws DatabaseOperationException {
 
@@ -92,6 +105,7 @@ public class PersonDaoTest {
     }
 
     //generate person, insert, verify successful insertion (extract inserted person, compare all attributes to generated person);
+    //invalid scenario - insert existing person - throws exception;
     @Test
     public void insertPersonTest() throws DatabaseOperationException {
 
@@ -116,7 +130,17 @@ public class PersonDaoTest {
         personDao.deletePerson(testPerson.getId());
     }
 
+    @Test
+    public void insertPersonInvalidTest() throws DatabaseOperationException {
+
+        Person testPerson = new Person();
+        testPerson.setId(generateExistentTestId());
+
+        assertThrows(DatabaseOperationException.class, () -> personDao.insertPerson(testPerson));
+    }
+
     //generate person, generate new salary index, insert person, update their salary index, extract person, compare salary index;
+    //invalid scenarios - update salary index to already existing value, update salary index of invalid id (both throwing exception);
     @Test
     public void updateSalaryIndexTest() throws DatabaseOperationException {
 
@@ -135,6 +159,13 @@ public class PersonDaoTest {
         assertEquals(newSalaryIndex, foundInsertedPerson.getSalaryIndex());
 
         personDao.deletePerson(testPerson.getId());
+    }
+
+    @Test
+    public void updateSalaryIndexInvalidTest() {
+
+        assertThrows(DatabaseOperationException.class,
+                () -> personDao.updateSalaryIndex(generateInvalidTestId(), 2.0));
     }
 
     //verify method behaviour to bad connection parameters (catch clause);

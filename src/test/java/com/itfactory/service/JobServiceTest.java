@@ -1,22 +1,18 @@
 package com.itfactory.service;
 
 import com.itfactory.dao.*;
-import com.itfactory.dao.JobDao;
 import com.itfactory.dao.JobDaoTest;
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
-import com.itfactory.model.Job;
 import com.itfactory.model.Person;
-import com.itfactory.model.WorkExperience;
+
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.xml.crypto.Data;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Writing JUnit tests for each of the 6 service methods in JobService class;
@@ -186,7 +182,7 @@ public class JobServiceTest {
 
         assertThrows(DatabaseOperationException.class,
                 () -> jobService.calculateSalary(
-                        new PersonService(new PersonDao()).getPersonById(PersonDaoTest.generateInvalidTestId()),
+                        new PersonService(new PersonDao()).getPersonById(PersonDaoIntegrationTest.generateInvalidTestId()),
                         jobService.getJobById(JobDaoTest.generateInvalidTestId())
                 )
         );

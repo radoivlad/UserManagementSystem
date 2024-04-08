@@ -1,15 +1,14 @@
 package com.itfactory.controller;
 
 import com.itfactory.dao.JobDaoTest;
-import com.itfactory.dao.PersonDaoTest;
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
 
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Testing the functionality of JobRestController methods;
@@ -31,7 +30,7 @@ class JobRestControllerTest {
 
         assertTrue(jobRestController.getJobById(String.valueOf(existentId)).toString().contains("successfully"));
 
-        assertTrue(jobRestController.getJobById(String.valueOf(PersonDaoTest.generateInvalidTestId())).toString().contains("Failed"));
+        assertTrue(jobRestController.getJobById(String.valueOf(JobDaoTest.generateInvalidTestId())).toString().contains("Failed"));
     }
 
     @Test

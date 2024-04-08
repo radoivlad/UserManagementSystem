@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
+
 /**
  * PersonDao contains the database manipulation functionality (CRUD) for our person database;
  * Necessary explanations provided throughout code;
@@ -27,7 +29,6 @@ public class PersonDao{
     private static final String DB_URL = "jdbc:mysql://localhost:3306/userms";
     private static final String DB_USER = "root";
     private static final String DB_PASS = "rootroot";
-
 
     //Creating CRUD (Create, Read, Update, Delete) methods for our person database;
     public Person getPersonById(int id) throws DatabaseOperationException {
@@ -154,13 +155,15 @@ public class PersonDao{
             //inputting into the statement the id of the Person to be removed;
             statement.setInt(1, id);
 
+            getPersonById(id);
             //executing the statement, removing the entry;
             statement.execute();
             LOGGER.info("Entry deleted successfully, for id = " + id);
 
-        } catch (SQLException e) {
+        } catch (SQLException | DatabaseOperationException e) {
             LOGGER.error("Connection failure", e);
             throw new DatabaseOperationException(e.getMessage());
+
         }
     }
 

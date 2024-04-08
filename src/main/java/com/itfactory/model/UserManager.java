@@ -7,6 +7,7 @@ import com.itfactory.exceptions.DatabaseOperationException;
  */
 
 public interface UserManager {
+
     Job getJob() throws DatabaseOperationException;
 
     double getSalary() throws DatabaseOperationException;

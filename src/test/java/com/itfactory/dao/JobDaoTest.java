@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Writing JUnit tests for each of the 5 database manipulation methods (CRUD) in JobDao class;
- * Included - connection test;
+ * Included - connection test and invalid scenarios;
  * Using static helper methods to generate existent and non-existent database id;
  * Similar testing methodology to PersonDaoTest, as described in comments;
  */
@@ -127,6 +127,7 @@ public class JobDaoTest {
     public void connectionTest() {
 
         try {
+
             Connection connection = DriverManager.getConnection("testUrl");
 
             PreparedStatement statement = connection.prepareStatement("DELETE FROM job WHERE id = ?");
@@ -136,6 +137,7 @@ public class JobDaoTest {
             statement.execute();
 
         } catch(SQLException e){
+
             assertEquals("No suitable driver found for testUrl", e.getMessage());
         }
     }

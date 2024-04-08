@@ -10,8 +10,8 @@ import com.itfactory.exceptions.DatabaseOperationException;
 
 public class PersonManager implements UserManager{
 
-    private final JobDao jobDao = new JobDao();
-    private final JobService jobService = new JobService(jobDao);
+    protected JobDao jobDao = new JobDao();
+    protected JobService jobService = new JobService(jobDao);
     private final Person person;
 
     public PersonManager(Person person) {
@@ -20,16 +20,21 @@ public class PersonManager implements UserManager{
 
     @Override
     public Job getJob() throws DatabaseOperationException {
+
         return jobDao.getJobById(person.getJobId());
     }
 
     @Override
     public double getSalary() throws DatabaseOperationException {
+
         return jobService.calculateSalary(person, jobDao.getJobById(person.getJobId()));
     }
 
     @Override
     public String getWorkExperience() {
+
+        if(person.getSalaryIndex() < 1 || person.getSalaryIndex() > 3) return "Invalid salary index value, outside of range 1 - 3";
+
         if(person.getSalaryIndex() < 1.4) {
             System.out.println(person.getName() + WorkExperience.ENTRY.getWorkExperience());
             return person.getName() + WorkExperience.ENTRY.getWorkExperience();
@@ -42,6 +47,7 @@ public class PersonManager implements UserManager{
             System.out.println(person.getName() + WorkExperience.MIDDLE.getWorkExperience());
             return person.getName() + WorkExperience.MIDDLE.getWorkExperience();
         }
+
         System.out.println(person.getName() + WorkExperience.SENIOR.getWorkExperience());
         return person.getName() + WorkExperience.SENIOR.getWorkExperience();
     }

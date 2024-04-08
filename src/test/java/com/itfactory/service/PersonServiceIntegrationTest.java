@@ -2,34 +2,35 @@ package com.itfactory.service;
 
 import com.itfactory.dao.JobDao;
 import com.itfactory.dao.JobDaoTest;
-import com.itfactory.dao.PersonDao;
-import com.itfactory.dao.PersonDaoTest;
+import com.itfactory.dao.PersonDaoIntegrationTest;
 import com.itfactory.model.Job;
 import com.itfactory.model.Person;
 import com.itfactory.model.WorkExperience;
 import com.itfactory.exceptions.DatabaseOperationException;
+
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
- * Writing JUnit tests for each of the 8 service methods in PersonService class;
+ * Writing JUnit INTEGRATION tests for each of the 8 service methods in PersonService class;
  * Included - tested scenarios where invalid id values are being passed in PersonService methods;
  */
 
 @SpringBootTest
-public class PersonServiceTest {
+public class PersonServiceIntegrationTest {
+
     @Autowired
     PersonService personService;
 
     @Test
     public void findPersonByIdTest() throws DatabaseOperationException {
 
-        int existentId = PersonDaoTest.generateExistentTestId();
+        int existentId = PersonDaoIntegrationTest.generateExistentTestId();
 
         assertDoesNotThrow(() -> personService.getPersonById(existentId));
 
@@ -43,7 +44,7 @@ public class PersonServiceTest {
     public void findPersonByInvalidIdTest (){
 
         assertThrows(DatabaseOperationException.class,
-                () -> personService.getPersonById(PersonDaoTest
+                () -> personService.getPersonById(PersonDaoIntegrationTest
                         .generateInvalidTestId()));
     }
 
@@ -51,7 +52,7 @@ public class PersonServiceTest {
     public void deletePersonTest () throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
@@ -68,7 +69,7 @@ public class PersonServiceTest {
     public void deletePersonByInvalidIdTest (){
 
         assertThrows(DatabaseOperationException.class,
-                () -> personService.deletePerson(PersonDaoTest.generateInvalidTestId()));
+                () -> personService.deletePerson(PersonDaoIntegrationTest.generateInvalidTestId()));
     }
 
     @Test
@@ -77,14 +78,14 @@ public class PersonServiceTest {
         int actualListSize = personService.getAllPersons().size();
 
         Person testPerson1 = new Person();
-        testPerson1.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson1.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson1.setName("Test Person One");
         testPerson1.setEmail("Test Email");
         testPerson1.setJobId(JobDaoTest.generateExistentTestId());
         personService.insertPerson(testPerson1);
 
         Person testPerson2 = new Person();
-        testPerson2.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson2.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson2.setName("Test Person Two");
         testPerson2.setEmail("Test Email");
         testPerson2.setJobId(JobDaoTest.generateExistentTestId());
@@ -103,7 +104,7 @@ public class PersonServiceTest {
     public void insertPersonTest () throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("test@email.com");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
@@ -127,7 +128,7 @@ public class PersonServiceTest {
     public void insertPersonInvalidIdTest (){
 
         assertThrows(DatabaseOperationException.class,
-                () -> personService.insertPerson(personService.getPersonById(PersonDaoTest.generateExistentTestId()))
+                () -> personService.insertPerson(personService.getPersonById(PersonDaoIntegrationTest.generateExistentTestId()))
         );
     }
 
@@ -135,7 +136,7 @@ public class PersonServiceTest {
     public void updateSalaryIndexTest () throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
@@ -156,10 +157,10 @@ public class PersonServiceTest {
     public void updateSalaryIndexInvalidInputTest () throws DatabaseOperationException {
 
         assertThrows(DatabaseOperationException.class,
-                () -> personService.updateSalaryIndex(PersonDaoTest.generateInvalidTestId(), 2.0));
+                () -> personService.updateSalaryIndex(PersonDaoIntegrationTest.generateInvalidTestId(), 2.0));
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
@@ -176,7 +177,7 @@ public class PersonServiceTest {
     @Test
     public void getPersonJobTest() throws DatabaseOperationException {
 
-        Person testPerson = personService.getPersonById(PersonDaoTest.generateExistentTestId());
+        Person testPerson = personService.getPersonById(PersonDaoIntegrationTest.generateExistentTestId());
 
         Job getJobOfTestPerson = personService.getPersonJob(testPerson.getId());
         Job actualJobOfTestPerson = new JobDao().getJobById(testPerson.getJobId());
@@ -191,13 +192,13 @@ public class PersonServiceTest {
     public void getPersonJobInvalidIdTest (){
 
         assertThrows(DatabaseOperationException.class,
-                () -> personService.getPersonJob(PersonDaoTest.generateInvalidTestId()));
+                () -> personService.getPersonJob(PersonDaoIntegrationTest.generateInvalidTestId()));
     }
 
     @Test
     public void getPersonSalaryTest() throws DatabaseOperationException {
 
-        Person testPerson = personService.getPersonById(PersonDaoTest.generateExistentTestId());
+        Person testPerson = personService.getPersonById(PersonDaoIntegrationTest.generateExistentTestId());
 
         double getSalaryOfTestPerson = personService.getPersonSalary(testPerson.getId());
         double actualSalaryOfTestPerson = new JobService(new JobDao()).calculateSalary(testPerson, new JobDao().getJobById(testPerson.getJobId()));
@@ -209,7 +210,7 @@ public class PersonServiceTest {
     public void getPersonSalaryInvalidIdTest (){
 
         assertThrows(DatabaseOperationException.class,
-                () -> personService.getPersonSalary(PersonDaoTest.generateInvalidTestId()));
+                () -> personService.getPersonSalary(PersonDaoIntegrationTest.generateInvalidTestId()));
     }
 
     @Test
@@ -218,7 +219,7 @@ public class PersonServiceTest {
         Person testPerson = personService.getPersonById(1);
 
         String getWorkExpOfTestPerson = personService.getPersonWorkExperience(testPerson.getId());
-        String actualWorkExpOfTestPerson = testPerson.getName() + WorkExperience.ENTRYTOMID.getWorkExperience();
+        String actualWorkExpOfTestPerson = testPerson.getName() + WorkExperience.ENTRY.getWorkExperience();
 
         assertEquals(getWorkExpOfTestPerson, actualWorkExpOfTestPerson);
         assertTrue(getWorkExpOfTestPerson.contains("they have been working"));
@@ -228,7 +229,7 @@ public class PersonServiceTest {
     public void getPersonWorkExperienceInvalidIdTest(){
 
         assertThrows(DatabaseOperationException.class,
-                () -> personService.getPersonWorkExperience(PersonDaoTest.generateInvalidTestId()));
+                () -> personService.getPersonWorkExperience(PersonDaoIntegrationTest.generateInvalidTestId()));
     }
 }
 

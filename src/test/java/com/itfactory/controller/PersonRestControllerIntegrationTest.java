@@ -1,7 +1,7 @@
 package com.itfactory.controller;
 
 import com.itfactory.dao.JobDaoTest;
-import com.itfactory.dao.PersonDaoTest;
+import com.itfactory.dao.PersonDaoIntegrationTest;
 import com.itfactory.model.Person;
 import com.itfactory.exceptions.DatabaseOperationException;
 
@@ -12,12 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Writing JUnit tests for each of the 8 PersonRestController methods;
+ * Writing JUnit INTEGRATION tests for each of the 8 PersonRestController methods;
  * Further testing can be done on the local server, verifying accessibility through endpoints - using Postman;
  */
 
 @SpringBootTest
-class PersonRestControllerTest {
+class PersonRestControllerIntegrationTest {
 
     @Autowired
     private PersonRestController personRestController;
@@ -25,20 +25,20 @@ class PersonRestControllerTest {
     @Test
     public void getPersonByIdCompleteTest() throws DatabaseOperationException {
 
-        int existentId = PersonDaoTest.generateExistentTestId();
+        int existentId = PersonDaoIntegrationTest.generateExistentTestId();
 
         assertDoesNotThrow(() -> personRestController.getPersonById(String.valueOf(existentId)));
 
         assertTrue(personRestController.getPersonById(String.valueOf(existentId)).toString().contains("successfully"));
 
-        assertTrue(personRestController.getPersonById(String.valueOf(PersonDaoTest.generateInvalidTestId())).toString().contains("Failed"));
+        assertTrue(personRestController.getPersonById(String.valueOf(PersonDaoIntegrationTest.generateInvalidTestId())).toString().contains("Failed"));
     }
 
     @Test
     public void deletePersonCompleteTest () throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
@@ -55,14 +55,14 @@ class PersonRestControllerTest {
     public void getAllPersonsTest () throws DatabaseOperationException {
 
         Person testPerson1 = new Person();
-        testPerson1.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson1.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson1.setName("Test Person One");
         testPerson1.setEmail("Test Email");
         testPerson1.setJobId(JobDaoTest.generateExistentTestId());
         personRestController.insertPerson(testPerson1);
 
         Person testPerson2 = new Person();
-        testPerson2.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson2.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson2.setName("Test Person Two");
         testPerson2.setEmail("Test Email");
         testPerson2.setJobId(JobDaoTest.generateExistentTestId());
@@ -78,7 +78,7 @@ class PersonRestControllerTest {
     public void insertPersonCompleteTest () throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
@@ -94,7 +94,7 @@ class PersonRestControllerTest {
     public void updateSalaryIndexCompleteTest () throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
@@ -119,7 +119,7 @@ class PersonRestControllerTest {
     public void getPersonJobCompleteTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
@@ -137,7 +137,7 @@ class PersonRestControllerTest {
     public void getPersonSalaryCompleteTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());
@@ -155,7 +155,7 @@ class PersonRestControllerTest {
     public void getPersonWorkExperienceCompleteTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoTest.generateInvalidTestId());
+        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("Test Email");
         testPerson.setJobId(JobDaoTest.generateExistentTestId());

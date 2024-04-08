@@ -5,6 +5,7 @@ import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.service.JobService;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -64,5 +65,18 @@ public class Person extends BaseModel{
     public String toStringLine() {
         return String.format("Person database entry for: name = %18s, id = %4d, email = %25s, job id = %3d, salary index = %5.1f",
                 getName(), getId(), email, jobId, salaryIndex);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return jobId == person.jobId && Double.compare(salaryIndex, person.salaryIndex) == 0 && Objects.equals(email, person.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, jobId, salaryIndex);
     }
 }
