@@ -1,6 +1,6 @@
 package com.itfactory.controller;
 
-import com.itfactory.dao.JobDaoTest;
+import com.itfactory.dao.JobDaoIntegrationTest;
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
 
@@ -11,33 +11,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * Testing the functionality of JobRestController methods;
+ * Writing JUnit INTEGRATION tests for each of the 5 CRUD JobRestController methods;
  * Further testing can be done on the local server, verifying accessibility through endpoints - using Postman;
+ * Slightly different testing methodology than JobDaoIntegrationTest, with valid and invalid scenarios in a single complete method;
+ * Asserting by ResponseEntity<String> response body;
  */
 
 @SpringBootTest
-class JobRestControllerTest {
+class JobRestControllerIntegrationTest {
 
     @Autowired
     private JobRestController jobRestController;
 
     @Test
-    public void findJobByIdCompleteTest () throws DatabaseOperationException {
+    public void getJobByIdCompleteTest () throws DatabaseOperationException {
 
-        int existentId = JobDaoTest.generateExistentTestId();
+        int existentId = JobDaoIntegrationTest.generateExistentTestId();
 
         assertDoesNotThrow(() -> jobRestController.getJobById(String.valueOf(existentId)));
 
         assertTrue(jobRestController.getJobById(String.valueOf(existentId)).toString().contains("successfully"));
 
-        assertTrue(jobRestController.getJobById(String.valueOf(JobDaoTest.generateInvalidTestId())).toString().contains("Failed"));
+        assertTrue(jobRestController.getJobById(
+                String.valueOf(JobDaoIntegrationTest.generateInvalidTestId())).toString().contains("Failed"));
     }
 
     @Test
     public void deleteJobCompleteTest () throws DatabaseOperationException {
 
         Job testJob = new Job();
-        testJob.setId(JobDaoTest.generateInvalidTestId());
+        testJob.setId(JobDaoIntegrationTest.generateInvalidTestId());
         testJob.setName("Test Job");
         testJob.setDomain("Test Domain");
         testJob.setBaseSalary(2000);
@@ -54,13 +57,13 @@ class JobRestControllerTest {
     public void getAllJobsTest () throws DatabaseOperationException {
 
         Job testJob1 = new Job();
-        testJob1.setId(JobDaoTest.generateInvalidTestId());
+        testJob1.setId(JobDaoIntegrationTest.generateInvalidTestId());
         testJob1.setName("Test Job One");
         testJob1.setDomain("Test Domain");
         jobRestController.insertJob(testJob1);
 
         Job testJob2 = new Job();
-        testJob2.setId(JobDaoTest.generateInvalidTestId());
+        testJob2.setId(JobDaoIntegrationTest.generateInvalidTestId());
         testJob2.setName("Test Job Two");
         testJob2.setDomain("Test Domain");
         jobRestController.insertJob(testJob2);
@@ -75,7 +78,7 @@ class JobRestControllerTest {
     public void insertJobCompleteTest () throws DatabaseOperationException {
 
         Job testJob = new Job();
-        testJob.setId(JobDaoTest.generateInvalidTestId());
+        testJob.setId(JobDaoIntegrationTest.generateInvalidTestId());
         testJob.setName("Test Job");
         testJob.setDomain("Test Domain");
         testJob.setBaseSalary(2000);
@@ -88,10 +91,10 @@ class JobRestControllerTest {
     }
 
     @Test
-    public void testUpdateBaseSalary () throws DatabaseOperationException {
+    public void testUpdateBaseSalaryCompleteTest () throws DatabaseOperationException {
 
         Job testJob = new Job();
-        testJob.setId(JobDaoTest.generateInvalidTestId());
+        testJob.setId(JobDaoIntegrationTest.generateInvalidTestId());
         testJob.setName("Test Job");
         testJob.setDomain("Test Domain");
         testJob.setBaseSalary(2000);

@@ -1,7 +1,7 @@
 package com.itfactory.model;
 
 import com.itfactory.dao.JobDao;
-import com.itfactory.dao.JobDaoTest;
+import com.itfactory.dao.JobDaoIntegrationTest;
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.service.JobService;
 
@@ -15,12 +15,13 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * Writing mock tests for PersonManager class;
+ * Writing mock tests for the 3 methods in PersonManager class;
  */
 
 @SpringBootTest
 class PersonManagerMockTest {
 
+    //mocking jobDao, jobService and person, then, using them to initialize personManager, as to be able to mock behaviour;
     @Mock
     private JobDao jobDao;
     @Mock
@@ -29,17 +30,19 @@ class PersonManagerMockTest {
     private Person person;
     private PersonManager personManager;
 
-
     @BeforeEach
     void setUp() throws DatabaseOperationException {
 
-        person.setJobId(JobDaoTest.generateExistentTestId());
+        person.setJobId(JobDaoIntegrationTest.generateExistentTestId());
 
         personManager = new PersonManager(person);
         personManager.jobDao = jobDao;
         personManager.jobService = jobService;
     }
 
+    //creating a mock job, mocking jobDao behaviour, calling the tested method, asserting between initial mock job and obtained job;
+    //verifying successful calling;
+    //invalid scenario - setting invalid job id for person, mocking jobDao to throw exception, asserting it;
     @Test
     public void getJobMockTest() throws DatabaseOperationException {
 
@@ -62,7 +65,7 @@ class PersonManagerMockTest {
     @Test
     public void getJobInvalidIdMockTest() throws DatabaseOperationException {
 
-        person.setJobId(JobDaoTest.generateInvalidTestId());
+        person.setJobId(JobDaoIntegrationTest.generateInvalidTestId());
 
         when(jobDao.getJobById(person.getJobId())).thenThrow(DatabaseOperationException.class);
 
@@ -72,6 +75,9 @@ class PersonManagerMockTest {
         verifyNoMoreInteractions(jobDao);
     }
 
+    //creating a custom salary, setting salary index for person and base salary for a created mock job, mocking jobService to return custom salary;
+    //calling tested method, asserting between custom salary and obtained salary, verifying successful calling;
+    //invalid scenario - setting invalid job id for person, mocking jobDao to throw exception (argument in jobService method), asserting it;
     @Test
     public void getSalaryMockTest() throws DatabaseOperationException {
 
@@ -96,7 +102,7 @@ class PersonManagerMockTest {
     @Test
     public void getSalaryInvalidIdMockTest() throws DatabaseOperationException {
 
-        person.setJobId(JobDaoTest.generateInvalidTestId());
+        person.setJobId(JobDaoIntegrationTest.generateInvalidTestId());
 
         when(jobDao.getJobById(person.getJobId())).thenThrow(DatabaseOperationException.class);
 
@@ -106,6 +112,9 @@ class PersonManagerMockTest {
         verifyNoMoreInteractions(jobDao);
     }
 
+    //creating a custom work experience, setting salary index for person, mocking person to return set salary index;
+    //calling tested method, asserting between custom work experience and obtained work experience, verifying successful calling;
+    //invalid scenario - setting invalid salary index for person, mock person to return set salary index, assert if corresponding message is returned;
     @Test
     public void getWorkExperienceMockTest() {
 

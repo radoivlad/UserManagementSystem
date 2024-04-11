@@ -1,7 +1,7 @@
 package com.itfactory.service;
 
 import com.itfactory.dao.JobDao;
-import com.itfactory.dao.JobDaoTest;
+import com.itfactory.dao.JobDaoIntegrationTest;
 import com.itfactory.dao.PersonDaoIntegrationTest;
 import com.itfactory.model.Job;
 import com.itfactory.model.Person;
@@ -19,16 +19,17 @@ import java.util.List;
 /**
  * Writing JUnit INTEGRATION tests for each of the 8 service methods in PersonService class;
  * Included - tested scenarios where invalid id values are being passed in PersonService methods;
+ * Similar testing methodology to PersonDaoIntegrationTest, as described in comments;
  */
 
 @SpringBootTest
 public class PersonServiceIntegrationTest {
 
     @Autowired
-    PersonService personService;
+    private PersonService personService;
 
     @Test
-    public void findPersonByIdTest() throws DatabaseOperationException {
+    public void getPersonByIdTest() throws DatabaseOperationException {
 
         int existentId = PersonDaoIntegrationTest.generateExistentTestId();
 
@@ -41,7 +42,7 @@ public class PersonServiceIntegrationTest {
     }
 
     @Test
-    public void findPersonByInvalidIdTest (){
+    public void getPersonByInvalidIdTest (){
 
         assertThrows(DatabaseOperationException.class,
                 () -> personService.getPersonById(PersonDaoIntegrationTest
@@ -55,7 +56,7 @@ public class PersonServiceIntegrationTest {
         testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("Test Email");
-        testPerson.setJobId(JobDaoTest.generateExistentTestId());
+        testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
 
         personService.insertPerson(testPerson);
 
@@ -81,14 +82,14 @@ public class PersonServiceIntegrationTest {
         testPerson1.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson1.setName("Test Person One");
         testPerson1.setEmail("Test Email");
-        testPerson1.setJobId(JobDaoTest.generateExistentTestId());
+        testPerson1.setJobId(JobDaoIntegrationTest.generateExistentTestId());
         personService.insertPerson(testPerson1);
 
         Person testPerson2 = new Person();
         testPerson2.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson2.setName("Test Person Two");
         testPerson2.setEmail("Test Email");
-        testPerson2.setJobId(JobDaoTest.generateExistentTestId());
+        testPerson2.setJobId(JobDaoIntegrationTest.generateExistentTestId());
         personService.insertPerson(testPerson2);
 
         List<Person> testPersonsInserted = personService.getAllPersons();
@@ -107,7 +108,7 @@ public class PersonServiceIntegrationTest {
         testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("test@email.com");
-        testPerson.setJobId(JobDaoTest.generateExistentTestId());
+        testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
         testPerson.setSalaryIndex(2);
 
         personService.insertPerson(testPerson);
@@ -139,7 +140,7 @@ public class PersonServiceIntegrationTest {
         testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("Test Email");
-        testPerson.setJobId(JobDaoTest.generateExistentTestId());
+        testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
         testPerson.setSalaryIndex(2);
         double newSalaryIndex = 2.5;
 
@@ -156,14 +157,16 @@ public class PersonServiceIntegrationTest {
     @Test
     public void updateSalaryIndexInvalidInputTest () throws DatabaseOperationException {
 
+        //invalid scenario 1 - update salary index of invalid id;
         assertThrows(DatabaseOperationException.class,
                 () -> personService.updateSalaryIndex(PersonDaoIntegrationTest.generateInvalidTestId(), 2.0));
 
+        //invalid scenario 2 - update salary index of valid id, but existing salary index;
         Person testPerson = new Person();
         testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("Test Email");
-        testPerson.setJobId(JobDaoTest.generateExistentTestId());
+        testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
         testPerson.setSalaryIndex(2.0);
 
         personService.insertPerson(testPerson);
@@ -174,6 +177,8 @@ public class PersonServiceIntegrationTest {
         personService.deletePerson(testPerson.getId());
     }
 
+    //retrieve an existing database person, get job by tested method and JobDao method, compare the 2 obtained jobs;
+    //invalid scenario - get job of non-existing database person;
     @Test
     public void getPersonJobTest() throws DatabaseOperationException {
 
@@ -195,6 +200,8 @@ public class PersonServiceIntegrationTest {
                 () -> personService.getPersonJob(PersonDaoIntegrationTest.generateInvalidTestId()));
     }
 
+    //retrieve an existing database person, get salary by tested method and JobService method, compare the 2 obtained salaries;
+    //invalid scenario - get salary of non-existing database person;
     @Test
     public void getPersonSalaryTest() throws DatabaseOperationException {
 
@@ -213,6 +220,8 @@ public class PersonServiceIntegrationTest {
                 () -> personService.getPersonSalary(PersonDaoIntegrationTest.generateInvalidTestId()));
     }
 
+    //retrieve an existing database person, get work experience by tested method, compare to actual work experience of person;
+    //invalid scenario - get work experience of non-existing database person;
     @Test
     public void getPersonWorkExperienceTest() throws DatabaseOperationException {
 

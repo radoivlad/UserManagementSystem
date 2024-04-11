@@ -2,8 +2,10 @@ package com.itfactory.dao;
 
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
-import com.itfactory.model.Job;
+
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -11,26 +13,25 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 import java.util.List;
 import java.util.Random;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Writing JUnit tests for each of the 5 database manipulation methods (CRUD) in JobDao class;
  * Included - connection test and invalid scenarios;
  * Using static helper methods to generate existent and non-existent database id;
- * Similar testing methodology to PersonDaoTest, as described in comments;
+ * Similar testing methodology to PersonDaoIntegrationTest, as described in comments;
  */
 
 @SpringBootTest
-public class JobDaoTest {
+public class JobDaoIntegrationTest {
     
     @Autowired
-    JobDao jobDao;
+    private JobDao jobDao;
 
     @Test
-    public void findJobByIdTest() throws DatabaseOperationException {
+    public void getJobByIdTest() throws DatabaseOperationException {
 
         int existentId = generateExistentTestId();
 
@@ -40,6 +41,13 @@ public class JobDaoTest {
 
         assertNotNull(foundTestJobById);
         assertEquals(existentId, foundTestJobById.getId());
+    }
+
+    @Test
+    public void getJobByIdInvalidTest() {
+
+        assertThrows(DatabaseOperationException.class,
+                () -> jobDao.getJobById(generateInvalidTestId()));
     }
 
     @Test
@@ -55,6 +63,13 @@ public class JobDaoTest {
 
         assertThrows(DatabaseOperationException.class,
                 () -> jobDao.getJobById(testJob.getId()));
+    }
+
+    @Test
+    public void deleteJobInvalidTest() {
+
+        assertThrows(DatabaseOperationException.class,
+                () -> jobDao.deleteJob(generateInvalidTestId()));
     }
 
     @Test
@@ -104,6 +119,15 @@ public class JobDaoTest {
     }
 
     @Test
+    public void insertJobInvalidTest() throws DatabaseOperationException {
+
+        Job testJob = new Job();
+        testJob.setId(generateExistentTestId());
+
+        assertThrows(DatabaseOperationException.class, () -> jobDao.insertJob(testJob));
+    }
+
+    @Test
     public void updateBaseSalaryTest() throws DatabaseOperationException {
 
         Job testJob = new Job();
@@ -122,6 +146,12 @@ public class JobDaoTest {
         jobDao.deleteJob(testJob.getId());
     }
 
+    @Test
+    public void updateBaseSalaryInvalidTest() {
+
+        assertThrows(DatabaseOperationException.class,
+                () -> jobDao.updateBaseSalary(generateInvalidTestId(), 4000));
+    }
 
     @Test
     public void connectionTest() {

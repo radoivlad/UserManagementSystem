@@ -1,6 +1,6 @@
 package com.itfactory.service;
 
-import com.itfactory.dao.JobDaoTest;
+import com.itfactory.dao.JobDaoIntegrationTest;
 import com.itfactory.dao.PersonDao;
 import com.itfactory.dao.PersonDaoIntegrationTest;
 import com.itfactory.exceptions.DatabaseOperationException;
@@ -8,17 +8,16 @@ import com.itfactory.model.Person;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.mockito.Mock;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 /**
  * Writing JUnit MOCK tests for each of the 5 CRUD service methods in PersonService class;
@@ -82,9 +81,11 @@ class PersonServiceMockTest {
         mockPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         mockPerson.setName("Test Mock Person");
         mockPerson.setEmail("Email Mock Person");
-        mockPerson.setJobId(JobDaoTest.generateExistentTestId());
+        mockPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
 
         personService.insertPerson(mockPerson);
+
+        when(personDao.getPersonById(mockPerson.getId())).thenReturn(mockPerson);
 
         personService.deletePerson(mockPerson.getId());
 
@@ -138,7 +139,7 @@ class PersonServiceMockTest {
         mockPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
         mockPerson.setName("Test Mock Person");
         mockPerson.setEmail("test@email.com");
-        mockPerson.setJobId(JobDaoTest.generateExistentTestId());
+        mockPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
         mockPerson.setSalaryIndex(2);
 
         personService.insertPerson(mockPerson);
@@ -166,7 +167,7 @@ class PersonServiceMockTest {
         mockPerson.setId(PersonDaoIntegrationTest.generateExistentTestId());
         mockPerson.setName("Test Mock Person");
         mockPerson.setEmail("test@email.com");
-        mockPerson.setJobId(JobDaoTest.generateExistentTestId());
+        mockPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
         mockPerson.setSalaryIndex(2);
 
         doThrow(DatabaseOperationException.class).when(personDao).insertPerson(mockPerson);

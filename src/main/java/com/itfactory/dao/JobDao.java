@@ -131,6 +131,7 @@ public class JobDao{
 
             statement.setInt(1, id);
 
+            getJobById(id);
             statement.execute();
             LOGGER.info("Entry deleted successfully, for id = " + id);
 

@@ -1,6 +1,7 @@
 package com.itfactory.service;
 
 import com.itfactory.dao.JobDao;
+import com.itfactory.dao.PersonDao;
 import com.itfactory.model.Job;
 import com.itfactory.model.Person;
 import com.itfactory.exceptions.DatabaseOperationException;
@@ -57,7 +58,15 @@ public class JobService {
         return jobDao.updateBaseSalary(id, baseSalary);
     }
 
-    public double calculateSalary(Person person, Job job) {
+    public double calculateSalary(Person person, Job job) throws DatabaseOperationException {
+
+        if(person.getSalaryIndex() < 1 || person.getSalaryIndex() > 3) {
+            throw new DatabaseOperationException("Error: salary index outside of range 1 - 3.");
+        }
+
+        if(job.getBaseSalary() < 500) {
+            throw new DatabaseOperationException("Error: base salary lesser than 500.");
+        }
 
         System.out.println(person.getName() + "'s salary is: " + person.getSalaryIndex() * job.getBaseSalary());
         return person.getSalaryIndex() * job.getBaseSalary();
@@ -71,10 +80,12 @@ public class JobService {
                 throw new DatabaseOperationException("Please enter letters for name or email!");
             }
             if (job.getBaseSalary() < 500) {
+
                 throw new DatabaseOperationException(
                         "Invalid Input for Base Salary - Please specify a value greater than 500!");
             }
         } catch(DatabaseOperationException | NumberFormatException e) {
+
             throw new DatabaseOperationException(e.getMessage());
         }
     }
@@ -82,10 +93,12 @@ public class JobService {
     private void validateUpdateBaseSalaryInput (int id, double baseSalary) throws DatabaseOperationException {
 
         if(getJobById(id).getBaseSalary() == baseSalary) {
+
             throw new DatabaseOperationException(
                     "Job base salary is already: " + baseSalary);
         }
         if(baseSalary < 500) throw new DatabaseOperationException(
+
                 "Invalid Input for Base Salary - Please specify a value greater than 500!");
     }
 }
