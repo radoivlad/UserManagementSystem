@@ -1,18 +1,13 @@
 package com.itfactory.service;
 
 import com.itfactory.dao.PersonDao;
+import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
 import com.itfactory.model.Person;
 import com.itfactory.model.PersonManager;
-import com.itfactory.exceptions.DatabaseOperationException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -23,8 +18,6 @@ import java.util.List;
 
 @Service
 public class PersonService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PersonService.class);
 
     //instantiating a PersonDao object;
     private final PersonDao personDao;

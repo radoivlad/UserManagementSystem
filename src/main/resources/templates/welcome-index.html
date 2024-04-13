@@ -40,7 +40,7 @@
     <div class="container">
 
         <!-- First row -->
-        <div class="row" style="text-align: center; margin-bottom: 20px">
+        <div class="row" style="text-align: center; margin-bottom: 10px">
             <p>You have a couple of possibilities in the realm of database manipulation</p>
             <p>Databases available for trial are: <strong>Person and Job</strong></p>
             <p><strong>Please make a selection:</strong></p>
@@ -51,14 +51,19 @@
         <!-- Second row, contains 2 columns (6 spaces each) -->
         <div class="row" style="margin-bottom: 30px">
 
-           <div class="col-md-6" style="text-align: center">
+           <div class="col-md-4" style="text-align: center; margin-top: 10px;">
                <h3>Access Person Database</h3>
-               <a th:href="@{/person}" class="btn btn-success">Person Database</a>
+               <a th:href="@{/person-info}" class="btn btn-success">Person Database</a>
            </div>
 
-            <div class="col-md-6" style="text-align: center">
+            <div class="col-md-4" style="text-align: center;">
+            <img src="https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-spring-boot-dashboard/0.13.2023072200/1689984300042/Microsoft.VisualStudio.Services.Icons.Default"
+                 alt="" style="max-height: 100px; width: auto; margin-top: 5px;">
+            </div>
+
+            <div class="col-md-4" style="text-align: center; margin-top: 10px;">
                 <h3>Access Job Database</h3>
-                <a th:href="@{/job}" class="btn btn-success">Job Database</a>
+                <a th:href="@{/job-info}" class="btn btn-success">Job Database</a>
             </div>
 
         </div>
@@ -66,11 +71,11 @@
         <hr>
 
         <!-- Third and last row -->
-        <div style="text-align: center; margin-top: 30px">
+        <div style="text-align: center;">
 
             <p>Each of those two sections offer a range of possibilities when it comes to <strong>extracting information,
                 editing it, deleting it or updating it</strong></p>
-            <p><strong>Interactive consoles</strong> are available for both databases, providing ease of interaction</p>
+            <p><strong>Swagger (OpenAPI) interface</strong> is available for both databases, providing ease of interaction</p>
 
             <p><strong>Actuator</strong> is enabled,
                 <a th:href="@{/actuator/health}" class="btn btn-success">Actuator Health</a> and
@@ -79,7 +84,7 @@
             </p>
 
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Spring_Boot.svg/800px-Spring_Boot.svg.png"
-            style="height:70px"/>
+            style="height:60px"/>
 
         </div>
     </div>

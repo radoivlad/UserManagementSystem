@@ -46,6 +46,8 @@
                <h3>GET:</h3>
 
                <a th:href="@{/job/all}" class="btn btn-success">Get All Jobs</a>
+               <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Spring_Boot.svg/800px-Spring_Boot.svg.png"
+                    style="height:40px"/>
                <p>Display all database entries</p>
                <hr>
                <h6>Using a job id, additional information can be retrieved (adding specific endpoint):</h6>
@@ -56,7 +58,7 @@
 
             <!-- Second column -->
             <div class="col-md-6">
-                <h6 id="additional">Activate interactive console (or use Postman) to perform additional operations in 'job' database, such as:</h6>
+                <h6 id="additional">Access Swagger interface (or use Postman) to perform additional operations in 'job' database, such as:</h6>
                 <h5>POST:</h5>
                     <ul>
                         <li>add a new job, insert information: id, name, domain and base salary;</li>
@@ -83,12 +85,12 @@
     <!-- Bottom div - console -->
     <div style="text-align: center">
 
-        <h3>Job Interactive Console:</h3>
-        <a th:href="@{/job/menu}" class="btn btn-success" onclick="showMenuMessage()">Activate Console</a>
-                    <p>Display interactive console menu</p>
-        <p id="menuMessage" style="display: none; color: green;">Menu activated successfully</p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Spring_Boot.svg/800px-Spring_Boot.svg.png"
-             style="height:40px"/>
+        <h3>Swagger (OpenAPI) Interface</h3>
+        <p>Display additional database manipulation options</p>
+        <a th:href="@{/swagger-ui/index.html}" class="btn btn-success" onclick="showMenuMessage()">Access Swagger</a>
+        <img src="https://static-00.iconduck.com/assets.00/swagger-icon-1024x1024-09037v1r.png"
+              style="height:50px"/>
+        <p id="menuMessage" style="display: none; color: green;">Swagger Interface Accessed Successfully</p>
 
     </div>
 

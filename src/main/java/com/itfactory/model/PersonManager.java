@@ -11,7 +11,9 @@ import com.itfactory.exceptions.DatabaseOperationException;
 public class PersonManager implements UserManager{
 
     protected JobDao jobDao = new JobDao();
+
     protected JobService jobService = new JobService(jobDao);
+
     private final Person person;
 
     public PersonManager(Person person) {

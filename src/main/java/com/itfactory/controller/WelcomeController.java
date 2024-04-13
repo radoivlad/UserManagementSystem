@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 /**
  * Defining user-friendliness through application-use instructions;
  */
+
 @Controller
-class WelcomeRestController {
+class WelcomeController {
     @GetMapping
     public String welcomeMessage(){
         return "welcome-index";

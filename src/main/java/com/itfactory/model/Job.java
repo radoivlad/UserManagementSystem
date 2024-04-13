@@ -1,7 +1,5 @@
 package com.itfactory.model;
 
-import org.springframework.stereotype.Component;
-
 import java.util.Random;
 
 /**
@@ -16,10 +14,12 @@ public class Job extends BaseModel{
     private double baseSalary;
 
     public Job() {
+
         baseSalary = new Random().nextDouble(500, 10000);
     }
 
     public Job(int id, String name, String domain, double baseSalary) {
+
         super(id, name);
         this.domain = domain;
         this.baseSalary = baseSalary;

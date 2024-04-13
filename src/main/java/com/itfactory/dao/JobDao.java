@@ -1,16 +1,16 @@
 package com.itfactory.dao;
 
+import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.itfactory.exceptions.DatabaseOperationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Repository;
+import static com.itfactory.dao.ConstantsDao.*;
 
 /**
  * JobDao contains the database manipulation functionality (CRUD) for our job database;
@@ -20,9 +20,6 @@ import org.springframework.stereotype.Repository;
 public class JobDao{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JobDao.class);
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/userms";
-    private static final String DB_USER = "root";
-    private static final String DB_PASS = "rootroot";
 
     public Job getJobById(int id) throws DatabaseOperationException {
 
@@ -122,7 +119,8 @@ public class JobDao{
     public void deleteJob(int id) throws DatabaseOperationException {
 
         try{
-            Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            Connection connection = DriverManager.getConnection(
+                    DB_URL, DB_USER, DB_PASS);
             LOGGER.info("Connected to MySQL database;");
 
             PreparedStatement statement = connection.prepareStatement(

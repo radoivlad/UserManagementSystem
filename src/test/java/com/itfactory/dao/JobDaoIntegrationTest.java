@@ -2,10 +2,7 @@ package com.itfactory.dao;
 
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
-
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,9 +10,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
 import java.util.List;
 import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Writing JUnit tests for each of the 5 database manipulation methods (CRUD) in JobDao class;
@@ -56,6 +54,8 @@ public class JobDaoIntegrationTest {
         Job testJob = new Job();
         testJob.setId(generateInvalidTestId());
         testJob.setName("Test Job");
+        testJob.setDomain("Test Job Domain");
+        testJob.setBaseSalary(3000);
 
         jobDao.insertJob(testJob);
 
@@ -79,12 +79,16 @@ public class JobDaoIntegrationTest {
 
         Job testJob1 = new Job();
         testJob1.setId(generateInvalidTestId());
-        testJob1.setName("Test Job1");
+        testJob1.setName("Test Job 1");
+        testJob1.setDomain("Test Job 1 Domain");
+        testJob1.setBaseSalary(3000);
         jobDao.insertJob(testJob1);
 
         Job testJob2 = new Job();
         testJob2.setId(generateInvalidTestId());
-        testJob2.setName("Test Job2");
+        testJob2.setName("Test Job 2");
+        testJob2.setDomain("Test Job 2 Domain");
+        testJob2.setBaseSalary(4000);
         jobDao.insertJob(testJob2);
 
         List<Job> testJobsInserted = jobDao.getAllJobs();
@@ -133,6 +137,7 @@ public class JobDaoIntegrationTest {
         Job testJob = new Job();
         testJob.setId(generateInvalidTestId());
         testJob.setName("Test Job");
+        testJob.setDomain("Test Job Domain");
         testJob.setBaseSalary(1000);
         double newBaseSalary = 2000;
 

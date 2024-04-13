@@ -1,18 +1,18 @@
 package com.itfactory.dao;
 
+import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Person;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.itfactory.exceptions.DatabaseOperationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.itfactory.dao.ConstantsDao.*;
 
 /**
  * PersonDao contains the database manipulation functionality (CRUD) for our person database;
@@ -25,16 +25,11 @@ public class PersonDao{
     //Creating the Logger, to log messages regarding the different application execution steps;
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonDao.class);
 
-    //Establishing URL, username and password variables (to be used for connecting to database);
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/userms";
-    private static final String DB_USER = "root";
-    private static final String DB_PASS = "rootroot";
-
     //Creating CRUD (Create, Read, Update, Delete) methods for our person database;
     public Person getPersonById(int id) throws DatabaseOperationException {
 
         try {
-            //Creating a connection to the database, using the above URL, USER and PASS;
+            //Creating a connection to the database, using the URL, USER and PASS imported from ConstantsDao class;
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             LOGGER.info("Connected to MySQL database;");
 
@@ -68,6 +63,7 @@ public class PersonDao{
             }
 
         } catch (SQLException e) {
+
             LOGGER.error("Connection failure", e);
             throw new DatabaseOperationException(e.getMessage());
             /*Integrating the whole code block in a try-catch statement, as to catch any
@@ -97,6 +93,7 @@ public class PersonDao{
             LOGGER.info("Entry added successfully;");
 
         } catch (SQLException e) {
+
             LOGGER.error("Connection failure", e);
             throw new DatabaseOperationException(e.getMessage());
         }
@@ -138,6 +135,7 @@ public class PersonDao{
             return retrievedList;
 
         } catch (SQLException e) {
+
             LOGGER.error("Connection failure", e);
             throw new DatabaseOperationException(e.getMessage());
         }
@@ -188,6 +186,7 @@ public class PersonDao{
             return getPersonById(id);
 
         } catch (SQLException e) {
+
             LOGGER.error("Connection failure", e);
             throw new DatabaseOperationException(e.getMessage());
         }

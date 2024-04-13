@@ -3,12 +3,12 @@ package com.itfactory.controller;
 import com.itfactory.dao.JobDaoIntegrationTest;
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
-
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Writing JUnit INTEGRATION tests for each of the 5 CRUD JobRestController methods;
@@ -75,7 +75,8 @@ class JobRestControllerIntegrationTest {
     }
 
     @Test
-    public void insertJobCompleteTest () throws DatabaseOperationException {
+    public void insertJobCompleteTest ()
+            throws DatabaseOperationException {
 
         Job testJob = new Job();
         testJob.setId(JobDaoIntegrationTest.generateInvalidTestId());
@@ -83,9 +84,11 @@ class JobRestControllerIntegrationTest {
         testJob.setDomain("Test Domain");
         testJob.setBaseSalary(2000);
 
-        assertTrue(jobRestController.insertJob(testJob).toString().contains("successfully"));
+        assertTrue(jobRestController.insertJob(testJob).toString()
+                .contains("successfully"));
 
-        assertTrue(jobRestController.insertJob(testJob).toString().contains("Failed"));
+        assertTrue(jobRestController.insertJob(testJob).toString()
+                .contains("Failed"));
 
         jobRestController.deleteJob(String.valueOf(testJob.getId()));
     }

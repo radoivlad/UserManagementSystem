@@ -1,14 +1,9 @@
 package com.itfactory.service;
 
 import com.itfactory.dao.JobDao;
-import com.itfactory.dao.PersonDao;
+import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
 import com.itfactory.model.Person;
-import com.itfactory.exceptions.DatabaseOperationException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +16,11 @@ import java.util.List;
 @Service
 public class JobService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PersonService.class);
-
     private final JobDao jobDao;
 
     @Autowired
     public JobService(JobDao jobDao) {
+
         this.jobDao = jobDao;
     }
 

@@ -1,15 +1,12 @@
 package com.itfactory.controller;
 
+import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Person;
 import com.itfactory.service.PersonService;
-import com.itfactory.exceptions.DatabaseOperationException;
-import com.itfactory.console.InteractiveConsole;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +17,7 @@ import java.util.List;
  * Controller methods return a ResponseEntity of type String, including an HTTP status code;
  */
 
-@Controller
+@RestController
 @RequestMapping("/person")
 public class PersonRestController {
 
@@ -34,19 +31,6 @@ public class PersonRestController {
         this.personService = personService;
     }
 
-    @GetMapping
-    public String welcomeMessage(){
-
-        return "person-index";
-    }
-
-    @GetMapping("/menu")
-    public String getPersonMenu() {
-
-            InteractiveConsole.startPersonConsole();
-            return "person-index";
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<String> getPersonById(@PathVariable String id){
 
@@ -54,19 +38,24 @@ public class PersonRestController {
             Person person = personService.getPersonById(Integer.parseInt(id));
             return ResponseEntity.status(HttpStatus.OK).body("Person retrieved by id successfully: " + "\n" + person);
         } catch (DatabaseOperationException | NumberFormatException e) {
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get person by id: " + e.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseEntity<String> insertPerson(@RequestBody Person person){
+    public ResponseEntity<String> insertPerson(
+            @RequestBody Person person){
 
         try {
             personService.insertPerson(person);
-            return ResponseEntity.status(HttpStatus.OK)
+            return ResponseEntity
+                    .status(HttpStatus.OK)
                     .body("Person inserted successfully.");
         } catch (DatabaseOperationException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to insert person: " + e.getMessage());
         }
     }
@@ -80,6 +69,7 @@ public class PersonRestController {
                     .body("Person database retrieved successfully:\n"
              + "<pre>" + getAllHtmlResponse + "</pre>");
         } catch (DatabaseOperationException e) {
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     "Failed to retrieve person database: " + e.getMessage());
         }
@@ -93,6 +83,7 @@ public class PersonRestController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Person deleted successfully");
         } catch (DatabaseOperationException | NumberFormatException e) {
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to delete person: " + e.getMessage());
         }
@@ -105,6 +96,7 @@ public class PersonRestController {
             personService.updateSalaryIndex(Integer.parseInt(id), Double.parseDouble(salaryIndex));
             return ResponseEntity.status(HttpStatus.OK).body("Person's salary index updated successfully");
         } catch (DatabaseOperationException | NumberFormatException e) {
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to update person's salary index: " + e.getMessage());
         }
@@ -117,6 +109,7 @@ public class PersonRestController {
             return ResponseEntity.status(HttpStatus.OK).body(personService.getPersonById(Integer.parseInt(id)).getName()
                     + "'s job retrieved successfully:" + "\n" + personService.getPersonJob(Integer.parseInt(id)));
         } catch (DatabaseOperationException | NumberFormatException e) {
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     "Failed to retrieve person's job: " + e.getMessage());
         }
@@ -127,8 +120,9 @@ public class PersonRestController {
 
         try {
             return ResponseEntity.status(HttpStatus.OK).body(personService.getPersonById(Integer.parseInt(id)).getName()
-                    + "'s salary retrieved successfully: " + personService.getPersonSalary(Integer.parseInt(id)));
+                    + "'s salary retrieved successfully: " + "\n" + personService.getPersonSalary(Integer.parseInt(id)));
         } catch (DatabaseOperationException | NumberFormatException e) {
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     "Failed to retrieve person's salary: " + e.getMessage());
         }
@@ -139,8 +133,9 @@ public class PersonRestController {
 
         try {
             return ResponseEntity.status(HttpStatus.OK).body(personService.getPersonById(Integer.parseInt(id)).getName()
-                    + "'s work experience retrieved successfully: " + personService.getPersonWorkExperience(Integer.parseInt(id)));
+                    + "'s work experience retrieved successfully: " + "\n" + personService.getPersonWorkExperience(Integer.parseInt(id)));
         } catch (DatabaseOperationException | NumberFormatException e) {
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     "Failed to retrieve person's work experience: " + e.getMessage());
         }
@@ -150,6 +145,7 @@ public class PersonRestController {
 
         List<Person> persons = personService.getAllPersons();
         StringBuilder htmlResponse = new StringBuilder();
+
         for (Person personLooped: persons) {
             htmlResponse.append(String.format(
                     "Person id: %2d; name: %18s; email: %25s; job id: %3d; salary index: %3.1f\n",
@@ -157,6 +153,7 @@ public class PersonRestController {
                     personLooped.getJobId(), personLooped.getSalaryIndex()
             ));
         }
+
         return htmlResponse;
     }
 }

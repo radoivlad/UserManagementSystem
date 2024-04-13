@@ -4,15 +4,13 @@ import com.itfactory.dao.JobDao;
 import com.itfactory.dao.JobDaoIntegrationTest;
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.service.JobService;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
-import static org.mockito.Mockito.*;
 import org.mockito.Mock;
-
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Writing mock tests for the 3 methods in PersonManager class;
@@ -28,6 +26,7 @@ class PersonManagerMockTest {
     private JobService jobService;
     @Mock
     private Person person;
+
     private PersonManager personManager;
 
     @BeforeEach

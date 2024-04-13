@@ -1,11 +1,8 @@
 package com.itfactory.dao;
 
-import com.itfactory.model.Person;
 import com.itfactory.exceptions.DatabaseOperationException;
-
+import com.itfactory.model.Person;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,9 +10,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
 import java.util.List;
 import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Writing JUnit INTEGRATION tests for each of the 5 database manipulation methods (CRUD) in PersonDAO class;
@@ -61,6 +59,7 @@ public class PersonDaoIntegrationTest {
         Person testPerson = new Person();
         testPerson.setId(generateInvalidTestId());
         testPerson.setName("Test Person");
+        testPerson.setEmail("Test Person Email");
         testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
 
         personDao.insertPerson(testPerson);
@@ -86,13 +85,15 @@ public class PersonDaoIntegrationTest {
 
         Person testPerson1 = new Person();
         testPerson1.setId(generateInvalidTestId());
-        testPerson1.setName("Test Person1");
+        testPerson1.setName("Test Person 1");
+        testPerson1.setEmail("Test Person 1 Email");
         testPerson1.setJobId(JobDaoIntegrationTest.generateExistentTestId());
         personDao.insertPerson(testPerson1);
 
         Person testPerson2 = new Person();
         testPerson2.setId(generateInvalidTestId());
-        testPerson2.setName("Test Person2");
+        testPerson2.setName("Test Person 2");
+        testPerson2.setEmail("Test Person 2 Email");
         testPerson2.setJobId(JobDaoIntegrationTest.generateExistentTestId());
         personDao.insertPerson(testPerson2);
 
@@ -148,6 +149,7 @@ public class PersonDaoIntegrationTest {
         Person testPerson = new Person();
         testPerson.setId(generateInvalidTestId());
         testPerson.setName("Test Person");
+        testPerson.setEmail("Test Person Email");
         testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
         testPerson.setSalaryIndex(2);
         double newSalaryIndex = 2.5;
