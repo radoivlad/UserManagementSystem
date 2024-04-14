@@ -159,9 +159,9 @@ public class PersonDao{
             LOGGER.info("Entry deleted successfully, for id = " + id);
 
         } catch (SQLException | DatabaseOperationException e) {
+
             LOGGER.error("Connection failure", e);
             throw new DatabaseOperationException(e.getMessage());
-
         }
     }
 

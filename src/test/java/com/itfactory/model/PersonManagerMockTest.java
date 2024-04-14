@@ -4,9 +4,12 @@ import com.itfactory.dao.JobDao;
 import com.itfactory.dao.JobDaoIntegrationTest;
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.service.JobService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.mockito.Mock;
+
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;

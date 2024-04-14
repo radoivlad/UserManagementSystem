@@ -8,16 +8,16 @@ import com.itfactory.model.Person;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.mockito.Mock;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Writing JUnit MOCK tests for each of the 5 CRUD service methods in PersonService class;
@@ -57,7 +57,8 @@ class PersonServiceMockTest {
         assertNotNull(foundPerson);
         assertEquals(existentId, foundPerson.getId());
 
-        verify(personDao, times(1)).getPersonById(existentId);
+        verify(personDao, times(1))
+                .getPersonById(existentId);
         verifyNoMoreInteractions(personDao);
     }
 

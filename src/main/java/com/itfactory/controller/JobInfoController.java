@@ -14,6 +14,7 @@ class JobInfoController {
 
     @GetMapping
     public String getJobInfo(){
+
         return "job-index";
     }
 }

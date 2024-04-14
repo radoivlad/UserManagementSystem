@@ -11,6 +11,7 @@ import java.util.Random;
 public class Job extends BaseModel{
 
     private String domain;
+
     private double baseSalary;
 
     public Job() {
@@ -26,14 +27,17 @@ public class Job extends BaseModel{
     }
 
     public String getDomain() {
+
         return domain;
     }
 
     public double getBaseSalary() {
+
         return baseSalary;
     }
 
     public void setDomain(String domain) {
+
         this.domain = domain;
     }
 
@@ -44,12 +48,14 @@ public class Job extends BaseModel{
 
     @Override
     public String toString() {
+
         return String.format("Job database entry for:\n %s,\n id = %d,\n domain = %s,\n base salary = %.1f\n",
                 getName(), getId(), domain, baseSalary);
     }
 
 
     public String toStringLine() {
+
         return String.format("Job database entry for: %20s, id = %4d, domain = %10s, base salary = %5.1f",
                 getName(), getId(), domain, baseSalary);
     }

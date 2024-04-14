@@ -4,6 +4,7 @@ import com.itfactory.dao.JobDao;
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
 import com.itfactory.model.Person;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 /**
  * Job database related service methods for validating data and sending requests to DAO (by request sent through Controller class);
+ * PersonService comments can be useful;
  */
 
 @Service
@@ -32,6 +34,7 @@ public class JobService {
     public void insertJob(Job job) throws DatabaseOperationException {
 
         validateInsertJobInput(job);
+
         jobDao.insertJob(job);
     }
 
@@ -43,35 +46,32 @@ public class JobService {
     public void deleteJob(int id) throws DatabaseOperationException {
 
         jobDao.getJobById(id);
+
         jobDao.deleteJob(id);
     }
 
     public Job updateBaseSalary(int id, double baseSalary) throws DatabaseOperationException {
 
         validateUpdateBaseSalaryInput(id, baseSalary);
+
         return jobDao.updateBaseSalary(id, baseSalary);
     }
 
     public double calculateSalary(Person person, Job job) throws DatabaseOperationException {
 
-        if(person.getSalaryIndex() < 1 || person.getSalaryIndex() > 3) {
-            throw new DatabaseOperationException("Error: salary index outside of range 1 - 3.");
-        }
-
-        if(job.getBaseSalary() < 500) {
-            throw new DatabaseOperationException("Error: base salary lesser than 500.");
-        }
+        validateCalculateSalaryInput(person, job);
 
         System.out.println(person.getName() + "'s salary is: " + person.getSalaryIndex() * job.getBaseSalary());
         return person.getSalaryIndex() * job.getBaseSalary();
     }
 
+    //validation methods for JobService;
     private static void validateInsertJobInput (Job job) throws DatabaseOperationException {
 
         try {
 
             if (!job.getName().matches("[a-zA-Z\\s]+") || !job.getDomain().matches("[a-zA-Z\\s]+")) {
-                throw new DatabaseOperationException("Please enter letters for name or email!");
+                throw new DatabaseOperationException("Please enter letters for name or domain!");
             }
             if (job.getBaseSalary() < 500) {
 
@@ -91,8 +91,22 @@ public class JobService {
             throw new DatabaseOperationException(
                     "Job base salary is already: " + baseSalary);
         }
+
         if(baseSalary < 500) throw new DatabaseOperationException(
 
                 "Invalid Input for Base Salary - Please specify a value greater than 500!");
+    }
+
+    private void validateCalculateSalaryInput (Person person, Job job) throws DatabaseOperationException {
+
+        if(person.getSalaryIndex() < 1 || person.getSalaryIndex() > 3) {
+
+            throw new DatabaseOperationException("Error: salary index outside of range 1 - 3.");
+        }
+
+        if(job.getBaseSalary() < 500) {
+
+            throw new DatabaseOperationException("Error: base salary lesser than 500.");
+        }
     }
 }

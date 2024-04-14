@@ -14,6 +14,7 @@ class PersonInfoController {
 
     @GetMapping
     public String getPersonInfo(){
+
         return "person-index";
     }
 }

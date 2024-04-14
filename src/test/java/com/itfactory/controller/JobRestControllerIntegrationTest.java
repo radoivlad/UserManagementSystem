@@ -3,7 +3,9 @@ package com.itfactory.controller;
 import com.itfactory.dao.JobDaoIntegrationTest;
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
+
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -75,8 +77,7 @@ class JobRestControllerIntegrationTest {
     }
 
     @Test
-    public void insertJobCompleteTest ()
-            throws DatabaseOperationException {
+    public void insertJobCompleteTest () throws DatabaseOperationException {
 
         Job testJob = new Job();
         testJob.setId(JobDaoIntegrationTest.generateInvalidTestId());

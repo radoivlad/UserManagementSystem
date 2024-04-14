@@ -5,9 +5,11 @@ package com.itfactory.model;
  */
 
 public enum WorkExperience {
+
     ENTRY, ENTRYTOMID, MIDDLE, SENIOR;
 
     public String getWorkExperience(){
+
         return switch(this) {
             case ENTRY -> " is entry level; they have been working here less than 1 year;";
             case ENTRYTOMID -> " is entry-to-mid level; they have been working more than 1 year;";

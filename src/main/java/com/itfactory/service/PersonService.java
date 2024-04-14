@@ -5,6 +5,7 @@ import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
 import com.itfactory.model.Person;
 import com.itfactory.model.PersonManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,7 @@ public class PersonService {
     public void insertPerson(Person person) throws DatabaseOperationException {
 
         validateInsertPersonInput(person);
+
         personDao.insertPerson(person);
     }
 
@@ -49,12 +51,14 @@ public class PersonService {
     public void deletePerson(int id) throws DatabaseOperationException {
 
         personDao.getPersonById(id);
+
         personDao.deletePerson(id);
     }
 
     public Person updateSalaryIndex(int id, double salaryIndex) throws DatabaseOperationException {
 
         validateUpdateSalaryIndexInput(id, salaryIndex);
+
         return personDao.updateSalaryIndex(id, salaryIndex);
     }
 
@@ -73,6 +77,7 @@ public class PersonService {
         return new PersonManager(getPersonById(id)).getWorkExperience();
     }
 
+    //validation methods for PersonService;
     private static void validateInsertPersonInput (Person person) throws DatabaseOperationException {
 
         try {
@@ -85,6 +90,7 @@ public class PersonService {
                         "Invalid Input for Salary Index - Please specify a value from 1 to 3!");
             }
         } catch(DatabaseOperationException | NumberFormatException e) {
+
             throw new DatabaseOperationException(e.getMessage());
         }
     }
@@ -92,10 +98,12 @@ public class PersonService {
     private void validateUpdateSalaryIndexInput (int id, double salaryIndex) throws DatabaseOperationException {
 
         if(getPersonById(id).getSalaryIndex() == salaryIndex) {
+
             throw new DatabaseOperationException(
                     "Person's salary index is already " + salaryIndex);
         }
         if(salaryIndex < 1.0 || salaryIndex > 3.0) throw new DatabaseOperationException(
+
                 "Invalid Input for Salary Index - Please specify a value from 1 to 3!");
     }
 }

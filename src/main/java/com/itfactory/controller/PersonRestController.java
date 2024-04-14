@@ -15,6 +15,7 @@ import java.util.List;
  * PersonRestController contains the REST web services for interacting with the person database;
  * Defining HTTP methods and endpoints for our user management system;
  * Controller methods return a ResponseEntity of type String, including an HTTP status code;
+ * Each handler method contains a call to the Service method;
  */
 
 @RestController

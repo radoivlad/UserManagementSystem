@@ -2,8 +2,10 @@ package com.itfactory.dao;
 
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -14,6 +16,7 @@ import static com.itfactory.dao.ConstantsDao.*;
 
 /**
  * JobDao contains the database manipulation functionality (CRUD) for our job database;
+ * Comment explanations in PersonDao can be useful;
  */
 
 @Repository
@@ -51,6 +54,7 @@ public class JobDao{
             }
 
         } catch (SQLException e) {
+
             LOGGER.error("Connection failure", e);
             throw new DatabaseOperationException(e.getMessage());
         }
@@ -62,8 +66,7 @@ public class JobDao{
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             LOGGER.info("Connected to MySQL database;");
 
-            PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO job VALUES(?, ?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO job VALUES(?, ?, ?, ?)");
             LOGGER.info("Prepared statement;");
 
             statement.setInt(1, job.getId());
@@ -76,6 +79,7 @@ public class JobDao{
             LOGGER.info("Entry added successfully;");
 
         } catch (SQLException e) {
+
             LOGGER.error("Connection failure", e);
             throw new DatabaseOperationException(e.getMessage());
         }
@@ -111,6 +115,7 @@ public class JobDao{
             return retrievedList;
 
         } catch (SQLException e) {
+
             LOGGER.error("Connection failure", e);
             throw new DatabaseOperationException(e.getMessage());
         }
@@ -123,8 +128,7 @@ public class JobDao{
                     DB_URL, DB_USER, DB_PASS);
             LOGGER.info("Connected to MySQL database;");
 
-            PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM job WHERE id = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM job WHERE id = ?");
             LOGGER.info("Prepared statement;");
 
             statement.setInt(1, id);
@@ -134,6 +138,7 @@ public class JobDao{
             LOGGER.info("Entry deleted successfully, for id = " + id);
 
         } catch (SQLException e) {
+
             LOGGER.error("Connection failure", e);
             throw new DatabaseOperationException(e.getMessage());
         }
@@ -157,6 +162,7 @@ public class JobDao{
             return getJobById(id);
 
         } catch (SQLException e) {
+
             LOGGER.error("Connection failure", e);
             throw new DatabaseOperationException(e.getMessage());
         }

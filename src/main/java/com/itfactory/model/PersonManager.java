@@ -5,7 +5,7 @@ import com.itfactory.service.JobService;
 import com.itfactory.exceptions.DatabaseOperationException;
 
 /**
- * Implementing extra functionality by implementing UserManager interface;
+ * Providing extra functionality by implementing UserManager interface;
  */
 
 public class PersonManager implements UserManager{
@@ -17,6 +17,7 @@ public class PersonManager implements UserManager{
     private final Person person;
 
     public PersonManager(Person person) {
+
         this.person = person;
     }
 
