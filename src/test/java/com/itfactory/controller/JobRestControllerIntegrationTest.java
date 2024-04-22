@@ -117,5 +117,4 @@ class JobRestControllerIntegrationTest {
         assertTrue(jobRestController.updateBaseSalary(String.valueOf(testJob.getId()), String.valueOf(newBaseSalary))
                 .toString().contains("Failed"));
     }
-
 }
