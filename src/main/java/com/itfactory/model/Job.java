@@ -59,5 +59,4 @@ public class Job extends BaseModel{
         return String.format("Job database entry for: %20s, id = %4d, domain = %10s, base salary = %5.1f",
                 getName(), getId(), domain, baseSalary);
     }
-
 }

@@ -103,6 +103,7 @@ public class JobRestController {
         List<Job> jobs = jobService.getAllJobs();
 
         for (Job jobLooped: jobs) {
+
             htmlResponse.append(String.format(
                     "Job id: %2d; name: %22s; domain: %15s; base salary: %3.1f\n",
                     jobLooped.getId(), jobLooped.getName(), jobLooped.getDomain(), jobLooped.getBaseSalary()

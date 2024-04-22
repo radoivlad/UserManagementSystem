@@ -56,6 +56,7 @@ public class PersonDao{
             /*Checking if resultSet has any results returned (by resultSet.next() boolean), then creating a Person object,
             using the obtained resultSet information;*/
             if(resultSet.next()) {
+
                 Person retrievedPerson = new Person();
                 retrievedPerson.setId(resultSet.getInt("id"));
                 retrievedPerson.setName(resultSet.getString("name"));
@@ -68,6 +69,7 @@ public class PersonDao{
                 System.out.println(retrievedPerson);
                 return retrievedPerson;
             } else {
+
                 throw new DatabaseOperationException("No person found with given id.");
             }
 

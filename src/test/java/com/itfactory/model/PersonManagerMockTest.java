@@ -139,8 +139,7 @@ class PersonManagerMockTest {
 
         when(person.getSalaryIndex()).thenReturn(invalidSalaryIndex);
 
-        assertThrows(DatabaseOperationException.class,
-                () -> personManager.getWorkExperience().contains("outside of range 1 - 3"));
+        assertThrows(DatabaseOperationException.class, () -> personManager.getWorkExperience());
 
         verify(person, times(2)).getSalaryIndex();
         verify(person, never()).getName();

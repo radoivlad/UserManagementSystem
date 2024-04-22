@@ -8,7 +8,7 @@ public enum WorkExperience {
 
     ENTRY, ENTRYTOMID, MIDDLE, SENIOR;
 
-    public String getWorkExperience(){
+    public String getWorkExperience() {
 
         return switch(this) {
 

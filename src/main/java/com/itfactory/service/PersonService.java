@@ -73,18 +73,21 @@ public class PersonService {
     public Job getPersonJob(int id) throws DatabaseOperationException {
 
         personManager.setPerson(getPersonById(id));
+
         return personManager.getJob();
     }
 
     public double getPersonSalary(int id) throws DatabaseOperationException {
 
         personManager.setPerson(getPersonById(id));
+
         return personManager.getSalary();
     }
 
     public String getPersonWorkExperience(int id) throws DatabaseOperationException {
 
         personManager.setPerson(getPersonById(id));
+
         return personManager.getWorkExperience();
     }
 

@@ -189,6 +189,7 @@ public class PersonDaoIntegrationTest {
             statement.execute();
 
         } catch(SQLException e){
+
             assertEquals("No suitable driver found for testUrl", e.getMessage());
         }
     }

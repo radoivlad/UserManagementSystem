@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * Writing JUnit INTEGRATION tests for each of the 8 PersonRestController methods;
- * Further testing can be done on the local server, verifying accessibility through endpoints - using Postman;
+ * Further testing can be done on the local server, verifying accessibility through endpoints - using Postman/Swagger interface;
  * Slightly different testing methodology than PersonDaoIntegrationTest, with valid and invalid scenarios in a single complete method;
  * Asserting by ResponseEntity<String> response body;
  */

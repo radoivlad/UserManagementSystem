@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Writing JUnit INTEGRATION tests for each of the 5 CRUD JobRestController methods;
- * Further testing can be done on the local server, verifying accessibility through endpoints - using Postman;
+ * Further testing can be done on the local server, verifying accessibility through endpoints - using Postman/Swagger interface;
  * Slightly different testing methodology than JobDaoIntegrationTest, with valid and invalid scenarios in a single complete method;
  * Asserting by ResponseEntity<String> response body;
  */

@@ -146,6 +146,7 @@ public class PersonRestController {
         StringBuilder htmlResponse = new StringBuilder();
 
         for (Person personLooped: persons) {
+
             htmlResponse.append(String.format(
                     "Person id: %2d; name: %18s; email: %25s; job id: %3d; salary index: %3.1f\n",
                     personLooped.getId(), personLooped.getName(), personLooped.getEmail(),
