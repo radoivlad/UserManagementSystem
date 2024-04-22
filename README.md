@@ -37,7 +37,8 @@ The BaseModel class allows for simpler implementation of further models for the 
 5. Select Git as **Version control**;
 6. Paste repository link in **URL** field;
 7. If **Maven** is not installed -> IntelliJ displays a message to install it, follow instructions provided (Maven will automatically configure the **dependencies** for you);
-8. Open the **Main** class and run the UserManagementSystem (Shift + F10);
+8. Make sure to **manually reload all Maven dependencies**, before running for the first time;
+9. Open the **Main** class and run the UserManagementSystem (Shift + F10);
 
 # b. RECOMMENDED: Clone repository to local drive, open with IntelliJ (locally):
 
@@ -48,7 +49,8 @@ The BaseModel class allows for simpler implementation of further models for the 
 5. Top-left corner: **File -> Open**;
 6. Select the folder we cloned earlier;
 7. If **Maven** is not installed -> IntelliJ displays a message to install it, follow instructions provided (Maven will automatically configure the **dependencies** for you);
-8. Open the **Main** class and run the UserManagementSystem (Shift + F10);
+8. Make sure to **manually reload all Maven dependencies**, before running for the first time;
+9. Open the **Main** class and run the UserManagementSystem (Shift + F10);
 
 # Finally, have fun && happy database navigating! :D
 //really open to any suggestions or improvement ideas, hit me up
