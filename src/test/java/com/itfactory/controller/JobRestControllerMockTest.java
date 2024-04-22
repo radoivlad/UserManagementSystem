@@ -102,7 +102,7 @@ class JobRestControllerMockTest {
     }
 
     @Test
-    public void deleteJobByIdInvalidMockTest () throws DatabaseOperationException {
+    public void deleteJobByIdInvalidMockTest() throws DatabaseOperationException {
 
         int invalidId = TestIdGenerator.generateInvalidTestId();
 
@@ -166,7 +166,7 @@ class JobRestControllerMockTest {
     }
 
     @Test
-    public void insertJobInvalidIdMockTest () throws DatabaseOperationException {
+    public void insertJobInvalidIdMockTest() throws DatabaseOperationException {
 
         Job mockJob = new Job();
         mockJob.setId(TestIdGenerator.generateExistentTestId());

@@ -56,24 +56,24 @@ public class PersonManager implements UserManager {
     @Override
     public String getWorkExperience() throws DatabaseOperationException {
 
-        if(person.getSalaryIndex() < 1 || person.getSalaryIndex() > 3) {
+        if (person.getSalaryIndex() < 1 || person.getSalaryIndex() > 3) {
 
             throw new DatabaseOperationException("Invalid salary index value, outside of range 1 - 3");
         }
 
-        if(person.getSalaryIndex() < 1.4) {
+        if (person.getSalaryIndex() < 1.4) {
 
             System.out.println(person.getName() + WorkExperience.ENTRY.getWorkExperience());
             return person.getName() + WorkExperience.ENTRY.getWorkExperience();
         }
 
-        if(person.getSalaryIndex() < 1.8) {
+        if (person.getSalaryIndex() < 1.8) {
 
             System.out.println(person.getName() + WorkExperience.ENTRYTOMID.getWorkExperience());
             return person.getName() + WorkExperience.ENTRYTOMID.getWorkExperience();
         }
 
-        if(person.getSalaryIndex() < 2.2) {
+        if (person.getSalaryIndex() < 2.2) {
 
             System.out.println(person.getName() + WorkExperience.MIDDLE.getWorkExperience());
             return person.getName() + WorkExperience.MIDDLE.getWorkExperience();

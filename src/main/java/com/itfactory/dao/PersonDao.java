@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 @Repository
-public class PersonDao{
+public class PersonDao {
 
     //Creating the Logger, to log messages regarding the different application execution steps;
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonDao.class);
@@ -55,7 +55,7 @@ public class PersonDao{
 
             /*Checking if resultSet has any results returned (by resultSet.next() boolean), then creating a Person object,
             using the obtained resultSet information;*/
-            if(resultSet.next()) {
+            if (resultSet.next()) {
 
                 Person retrievedPerson = new Person();
                 retrievedPerson.setId(resultSet.getInt("id"));
@@ -84,7 +84,7 @@ public class PersonDao{
 
     public void insertPerson(Person person) throws DatabaseOperationException {
 
-        try{
+        try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             LOGGER.info("Connected to MySQL database;");
 
@@ -112,7 +112,7 @@ public class PersonDao{
 
     public List<Person> getAllPersons() throws DatabaseOperationException {
 
-        try{
+        try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             LOGGER.info("Connected to MySQL database;");
 
@@ -125,7 +125,7 @@ public class PersonDao{
 
             List<Person> retrievedList = new ArrayList<>();
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
 
                 //Creating a Person object from each database entry;
                 Person personRetrieved = new Person();
@@ -154,7 +154,7 @@ public class PersonDao{
 
     public void deletePerson(int id) throws DatabaseOperationException {
 
-        try{
+        try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             LOGGER.info("Connected to MySQL database;");
 
@@ -178,7 +178,7 @@ public class PersonDao{
 
     public Person updateSalaryIndex(int id, double salaryIndex) throws DatabaseOperationException {
 
-        try{
+        try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             LOGGER.info("Connected to MySQL database;");
 

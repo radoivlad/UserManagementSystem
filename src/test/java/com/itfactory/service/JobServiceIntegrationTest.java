@@ -42,14 +42,14 @@ public class JobServiceIntegrationTest {
     }
 
     @Test
-    public void getJobByInvalidIdTest (){
+    public void getJobByInvalidIdTest() {
 
         assertThrows(DatabaseOperationException.class,
                 () -> jobService.getJobById(TestIdGenerator.generateInvalidTestId()));
     }
 
     @Test
-    public void deleteJobTest () throws DatabaseOperationException {
+    public void deleteJobTest() throws DatabaseOperationException {
 
         Job testJob = new Job();
         testJob.setId(TestIdGenerator.generateInvalidTestId());
@@ -65,14 +65,14 @@ public class JobServiceIntegrationTest {
     }
 
     @Test
-    public void deleteJobByInvalidIdTest (){
+    public void deleteJobByInvalidIdTest() {
 
         assertThrows(DatabaseOperationException.class,
                 () -> jobService.deleteJob(TestIdGenerator.generateInvalidTestId()));
     }
 
     @Test
-    public void getAllJobsTest () throws DatabaseOperationException {
+    public void getAllJobsTest() throws DatabaseOperationException {
 
         int actualListSize = jobService.getAllJobs().size();
 
@@ -98,7 +98,7 @@ public class JobServiceIntegrationTest {
     }
 
     @Test
-    public void insertJobTest () throws DatabaseOperationException {
+    public void insertJobTest() throws DatabaseOperationException {
 
         Job testJob = new Job();
         testJob.setId(TestIdGenerator.generateInvalidTestId());
@@ -120,15 +120,15 @@ public class JobServiceIntegrationTest {
     }
 
     @Test
-    public void insertJobInvalidInputTest (){
+    public void insertJobInvalidInputTest() {
 
-       assertThrows(DatabaseOperationException.class,
-               () -> jobService.insertJob(jobService.getJobById(TestIdGenerator.generateExistentTestId()))
-       );
+        assertThrows(DatabaseOperationException.class,
+                () -> jobService.insertJob(jobService.getJobById(TestIdGenerator.generateExistentTestId()))
+        );
     }
 
     @Test
-    public void updateBaseSalaryTest () throws DatabaseOperationException {
+    public void updateBaseSalaryTest() throws DatabaseOperationException {
 
         Job testJob = new Job();
         testJob.setId(TestIdGenerator.generateInvalidTestId());
@@ -148,7 +148,7 @@ public class JobServiceIntegrationTest {
     }
 
     @Test
-    public void updateBaseSalaryInvalidInputTest () throws DatabaseOperationException {
+    public void updateBaseSalaryInvalidInputTest() throws DatabaseOperationException {
 
         //invalid scenario 1 - update base salary of invalid id;
         assertThrows(DatabaseOperationException.class,

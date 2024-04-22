@@ -47,14 +47,14 @@ public class PersonServiceIntegrationTest {
     }
 
     @Test
-    public void getPersonByInvalidIdTest (){
+    public void getPersonByInvalidIdTest() {
 
         assertThrows(DatabaseOperationException.class,
                 () -> personService.getPersonById(TestIdGenerator.generateInvalidTestId()));
     }
 
     @Test
-    public void deletePersonTest () throws DatabaseOperationException {
+    public void deletePersonTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
         testPerson.setId(TestIdGenerator.generateInvalidTestId());
@@ -71,14 +71,14 @@ public class PersonServiceIntegrationTest {
     }
 
     @Test
-    public void deletePersonByInvalidIdTest (){
+    public void deletePersonByInvalidIdTest() {
 
         assertThrows(DatabaseOperationException.class,
                 () -> personService.deletePerson(TestIdGenerator.generateInvalidTestId()));
     }
 
     @Test
-    public void getAllPersonsTest () throws DatabaseOperationException {
+    public void getAllPersonsTest() throws DatabaseOperationException {
 
         int actualListSize = personService.getAllPersons().size();
 
@@ -106,7 +106,7 @@ public class PersonServiceIntegrationTest {
     }
 
     @Test
-    public void insertPersonTest () throws DatabaseOperationException {
+    public void insertPersonTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
         testPerson.setId(TestIdGenerator.generateInvalidTestId());
@@ -130,7 +130,7 @@ public class PersonServiceIntegrationTest {
     }
 
     @Test
-    public void insertPersonInvalidIdTest (){
+    public void insertPersonInvalidIdTest() {
 
         assertThrows(DatabaseOperationException.class,
                 () -> personService.insertPerson(personService.getPersonById(TestIdGenerator.generateExistentTestId()))
@@ -138,7 +138,7 @@ public class PersonServiceIntegrationTest {
     }
 
     @Test
-    public void updateSalaryIndexTest () throws DatabaseOperationException {
+    public void updateSalaryIndexTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
         testPerson.setId(TestIdGenerator.generateInvalidTestId());
@@ -159,7 +159,7 @@ public class PersonServiceIntegrationTest {
     }
 
     @Test
-    public void updateSalaryIndexInvalidInputTest () throws DatabaseOperationException {
+    public void updateSalaryIndexInvalidInputTest() throws DatabaseOperationException {
 
         //invalid scenario 1 - update salary index of invalid id;
         assertThrows(DatabaseOperationException.class,
@@ -198,7 +198,7 @@ public class PersonServiceIntegrationTest {
     }
 
     @Test
-    public void getPersonJobInvalidIdTest (){
+    public void getPersonJobInvalidIdTest() {
 
         assertThrows(DatabaseOperationException.class,
                 () -> personService.getPersonJob(TestIdGenerator.generateInvalidTestId()));
@@ -218,7 +218,7 @@ public class PersonServiceIntegrationTest {
     }
 
     @Test
-    public void getPersonSalaryInvalidIdTest (){
+    public void getPersonSalaryInvalidIdTest() {
 
         assertThrows(DatabaseOperationException.class,
                 () -> personService.getPersonSalary(TestIdGenerator.generateInvalidTestId()));
@@ -239,10 +239,9 @@ public class PersonServiceIntegrationTest {
     }
 
     @Test
-    public void getPersonWorkExperienceInvalidIdTest(){
+    public void getPersonWorkExperienceInvalidIdTest() {
 
         assertThrows(DatabaseOperationException.class,
                 () -> personService.getPersonWorkExperience(TestIdGenerator.generateInvalidTestId()));
     }
 }
-

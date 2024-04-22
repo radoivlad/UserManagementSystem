@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 class JobInfoController {
 
     @GetMapping
-    public String getJobInfo(){
+    public String getJobInfo() {
 
         return "job-index";
     }

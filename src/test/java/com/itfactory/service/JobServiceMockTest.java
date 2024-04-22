@@ -62,7 +62,7 @@ class JobServiceMockTest {
     }
 
     @Test
-    public void getJobByIdInvalidMockTest () throws DatabaseOperationException {
+    public void getJobByIdInvalidMockTest() throws DatabaseOperationException {
 
         int invalidId = TestIdGenerator.generateInvalidTestId();
 
@@ -96,7 +96,7 @@ class JobServiceMockTest {
     }
 
     @Test
-    public void deleteJobByIdInvalidMockTest () throws DatabaseOperationException {
+    public void deleteJobByIdInvalidMockTest() throws DatabaseOperationException {
 
         int invalidId = TestIdGenerator.generateInvalidTestId();
 
@@ -133,7 +133,7 @@ class JobServiceMockTest {
     }
 
     @Test
-    public void insertJobMockTest () throws DatabaseOperationException {
+    public void insertJobMockTest() throws DatabaseOperationException {
 
         Job mockJob = new Job();
         mockJob.setId(TestIdGenerator.generateInvalidTestId());
@@ -159,7 +159,7 @@ class JobServiceMockTest {
     }
 
     @Test
-    public void insertJobInvalidIdMockTest () throws DatabaseOperationException {
+    public void insertJobInvalidIdMockTest() throws DatabaseOperationException {
 
         Job mockJob = new Job();
         mockJob.setId(TestIdGenerator.generateExistentTestId());

@@ -33,7 +33,7 @@ public class JobRestController {
     @GetMapping("/{id}")
     public ResponseEntity<String> getJobById(@PathVariable String id) {
 
-        try{
+        try {
             Job job = jobService.getJobById(Integer.parseInt(id));
             return ResponseEntity.status(HttpStatus.OK).body("Job retrieved by id successfully: " + "\n" + job);
         } catch (DatabaseOperationException | NumberFormatException e) {
@@ -43,9 +43,9 @@ public class JobRestController {
     }
 
     @PostMapping
-    public ResponseEntity<String> insertJob(@RequestBody Job job){
+    public ResponseEntity<String> insertJob(@RequestBody Job job) {
 
-        try{
+        try {
             jobService.insertJob(job);
             return ResponseEntity.status(HttpStatus.OK).body("Job inserted successfully.");
         } catch (DatabaseOperationException e) {
@@ -57,11 +57,11 @@ public class JobRestController {
     @GetMapping("/all")
     public ResponseEntity<String> getAllJobs() {
 
-        try{
+        try {
             StringBuilder getAllHtmlResponse = getAllJobsHtmlResponse();
             return ResponseEntity.status(HttpStatus.OK).body("Job database retrieved successfully:\n"
-                    + "<pre>\n" + getAllHtmlResponse +"<pre>");
-        } catch(DatabaseOperationException e) {
+                    + "<pre>\n" + getAllHtmlResponse + "<pre>");
+        } catch (DatabaseOperationException e) {
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     "Failed to retrieve job database: " + e.getMessage());
@@ -69,9 +69,9 @@ public class JobRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteJob(@PathVariable String id){
+    public ResponseEntity<String> deleteJob(@PathVariable String id) {
 
-        try{
+        try {
             jobService.deleteJob(Integer.parseInt(id));
             return ResponseEntity.status(HttpStatus.OK).body("Job deleted successfully.");
         } catch (DatabaseOperationException | NumberFormatException e) {
@@ -81,10 +81,10 @@ public class JobRestController {
     }
 
     @PutMapping("/{id}/{baseSalary}")
-    public ResponseEntity<String> updateBaseSalary(@PathVariable String id, @PathVariable String baseSalary){
+    public ResponseEntity<String> updateBaseSalary(@PathVariable String id, @PathVariable String baseSalary) {
 
-        try{
-            if(baseSalary.toLowerCase().contains("f") || baseSalary.toLowerCase().contains("d")) {
+        try {
+            if (baseSalary.toLowerCase().contains("f") || baseSalary.toLowerCase().contains("d")) {
                 throw new DatabaseOperationException("Invalid Input for Base Salary - Please insert numeric values (minimum 500).");
             }
 
@@ -102,7 +102,7 @@ public class JobRestController {
         StringBuilder htmlResponse = new StringBuilder();
         List<Job> jobs = jobService.getAllJobs();
 
-        for (Job jobLooped: jobs) {
+        for (Job jobLooped : jobs) {
 
             htmlResponse.append(String.format(
                     "Job id: %2d; name: %22s; domain: %15s; base salary: %3.1f\n",

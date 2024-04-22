@@ -70,6 +70,7 @@ public class PersonService {
         return personDao.updateSalaryIndex(id, salaryIndex);
     }
 
+    //Creating calling methods for the 3 PersonManager methods (additional information, added to the CRUD methods);
     public Job getPersonJob(int id) throws DatabaseOperationException {
 
         personManager.setPerson(getPersonById(id));
@@ -92,7 +93,7 @@ public class PersonService {
     }
 
     //validation methods for PersonService;
-    private static void validateInsertPersonInput (Person person) throws DatabaseOperationException {
+    private static void validateInsertPersonInput(Person person) throws DatabaseOperationException {
 
         try {
 
@@ -111,20 +112,20 @@ public class PersonService {
 
                 throw new DatabaseOperationException("Invalid Input for Salary Index - Please specify a value from 1 to 3!");
             }
-        } catch(DatabaseOperationException | NumberFormatException e) {
+        } catch (DatabaseOperationException | NumberFormatException e) {
 
             throw new DatabaseOperationException(e.getMessage());
         }
     }
 
-    private void validateUpdateSalaryIndexInput (int id, double salaryIndex) throws DatabaseOperationException {
+    private void validateUpdateSalaryIndexInput(int id, double salaryIndex) throws DatabaseOperationException {
 
-        if(getPersonById(id).getSalaryIndex() == salaryIndex) {
+        if (getPersonById(id).getSalaryIndex() == salaryIndex) {
 
             throw new DatabaseOperationException("Person's salary index is already " + salaryIndex);
         }
 
-        if(salaryIndex < 1.0 || salaryIndex > 3.0) {
+        if (salaryIndex < 1.0 || salaryIndex > 3.0) {
 
             throw new DatabaseOperationException("Invalid Input for Salary Index - Please specify a value from 1 to 3!");
         }

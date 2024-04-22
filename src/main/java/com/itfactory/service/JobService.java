@@ -66,7 +66,7 @@ public class JobService {
     }
 
     //validation methods for JobService;
-    private static void validateInsertJobInput (Job job) throws DatabaseOperationException {
+    private static void validateInsertJobInput(Job job) throws DatabaseOperationException {
 
         try {
 
@@ -75,7 +75,7 @@ public class JobService {
                 throw new DatabaseOperationException("Invalid Input for Name - Please insert letters only!");
             }
 
-            if(!job.getDomain().matches("[a-zA-Z\\s]+")) {
+            if (!job.getDomain().matches("[a-zA-Z\\s]+")) {
 
                 throw new DatabaseOperationException("Invalid Input for Domain - Please insert letters only!");
             }
@@ -85,33 +85,33 @@ public class JobService {
                 throw new DatabaseOperationException(
                         "Invalid Input for Base Salary - Please specify a value greater than 500!");
             }
-        } catch(DatabaseOperationException | NumberFormatException e) {
+        } catch (DatabaseOperationException | NumberFormatException e) {
 
             throw new DatabaseOperationException(e.getMessage());
         }
     }
 
-    private void validateUpdateBaseSalaryInput (int id, double baseSalary) throws DatabaseOperationException {
+    private void validateUpdateBaseSalaryInput(int id, double baseSalary) throws DatabaseOperationException {
 
-        if(getJobById(id).getBaseSalary() == baseSalary) {
+        if (getJobById(id).getBaseSalary() == baseSalary) {
 
             throw new DatabaseOperationException(
                     "Job base salary is already: " + baseSalary);
         }
 
-        if(baseSalary < 500) throw new DatabaseOperationException(
+        if (baseSalary < 500) throw new DatabaseOperationException(
 
                 "Invalid Input for Base Salary - Please specify a value greater than 500!");
     }
 
-    private void validateCalculateSalaryInput (Person person, Job job) throws DatabaseOperationException {
+    private void validateCalculateSalaryInput(Person person, Job job) throws DatabaseOperationException {
 
-        if(person.getSalaryIndex() < 1 || person.getSalaryIndex() > 3) {
+        if (person.getSalaryIndex() < 1 || person.getSalaryIndex() > 3) {
 
             throw new DatabaseOperationException("Error: salary index outside of range 1 - 3.");
         }
 
-        if(job.getBaseSalary() < 500) {
+        if (job.getBaseSalary() < 500) {
 
             throw new DatabaseOperationException("Error: base salary lesser than 500.");
         }

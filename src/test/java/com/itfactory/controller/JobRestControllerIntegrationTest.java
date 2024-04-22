@@ -26,7 +26,7 @@ class JobRestControllerIntegrationTest {
     private JobRestController jobRestController;
 
     @Test
-    public void getJobByIdCompleteTest () throws DatabaseOperationException {
+    public void getJobByIdCompleteTest() throws DatabaseOperationException {
 
         int existentId = TestIdGenerator.generateExistentTestId();
 
@@ -39,7 +39,7 @@ class JobRestControllerIntegrationTest {
     }
 
     @Test
-    public void deleteJobCompleteTest () throws DatabaseOperationException {
+    public void deleteJobCompleteTest() throws DatabaseOperationException {
 
         Job testJob = new Job();
         testJob.setId(TestIdGenerator.generateInvalidTestId());
@@ -56,7 +56,7 @@ class JobRestControllerIntegrationTest {
     }
 
     @Test
-    public void getAllJobsTest () throws DatabaseOperationException {
+    public void getAllJobsTest() throws DatabaseOperationException {
 
         Job testJob1 = new Job();
         testJob1.setId(TestIdGenerator.generateInvalidTestId());
@@ -77,7 +77,7 @@ class JobRestControllerIntegrationTest {
     }
 
     @Test
-    public void insertJobCompleteTest () throws DatabaseOperationException {
+    public void insertJobCompleteTest() throws DatabaseOperationException {
 
         Job testJob = new Job();
         testJob.setId(TestIdGenerator.generateInvalidTestId());
@@ -95,7 +95,7 @@ class JobRestControllerIntegrationTest {
     }
 
     @Test
-    public void testUpdateBaseSalaryCompleteTest () throws DatabaseOperationException {
+    public void testUpdateBaseSalaryCompleteTest() throws DatabaseOperationException {
 
         Job testJob = new Job();
         testJob.setId(TestIdGenerator.generateInvalidTestId());

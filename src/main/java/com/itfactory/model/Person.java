@@ -9,7 +9,7 @@ import java.util.Random;
  * Encapsulated class - private fields and setters/getters usable;
  */
 
-public class Person extends BaseModel{
+public class Person extends BaseModel {
 
     private String email;
 

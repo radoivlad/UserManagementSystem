@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 @Repository
-public class JobDao{
+public class JobDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JobDao.class);
 
@@ -46,7 +46,7 @@ public class JobDao{
             LOGGER.info("Executing query: SELECT * FROM job WHERE id = " + id);
             ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
+            if (resultSet.next()) {
 
                 Job retrievedJob = new Job();
                 retrievedJob.setId(resultSet.getInt("id"));
@@ -71,7 +71,7 @@ public class JobDao{
 
     public void insertJob(Job job) throws DatabaseOperationException {
 
-        try{
+        try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             LOGGER.info("Connected to MySQL database;");
 
@@ -96,7 +96,7 @@ public class JobDao{
 
     public List<Job> getAllJobs() throws DatabaseOperationException {
 
-        try{
+        try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             LOGGER.info("Connected to MySQL database;");
 
@@ -108,7 +108,7 @@ public class JobDao{
 
             List<Job> retrievedList = new ArrayList<>();
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
 
                 Job jobRetrieved = new Job();
                 jobRetrieved.setId(resultSet.getInt("id"));
@@ -132,7 +132,7 @@ public class JobDao{
 
     public void deleteJob(int id) throws DatabaseOperationException {
 
-        try{
+        try {
             Connection connection = DriverManager.getConnection(
                     DB_URL, DB_USER, DB_PASS);
             LOGGER.info("Connected to MySQL database;");
@@ -155,7 +155,7 @@ public class JobDao{
 
     public Job updateBaseSalary(int id, double baseSalary) throws DatabaseOperationException {
 
-        try{
+        try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             LOGGER.info("Connected to MySQL database;");
 

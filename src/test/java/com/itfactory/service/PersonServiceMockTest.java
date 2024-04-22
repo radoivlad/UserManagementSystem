@@ -62,7 +62,7 @@ class PersonServiceMockTest {
     }
 
     @Test
-    public void getPersonByIdInvalidMockTest () throws DatabaseOperationException {
+    public void getPersonByIdInvalidMockTest() throws DatabaseOperationException {
 
         int invalidId = TestIdGenerator.generateInvalidTestId();
 
@@ -96,7 +96,7 @@ class PersonServiceMockTest {
     }
 
     @Test
-    public void deletePersonByIdInvalidMockTest () throws DatabaseOperationException {
+    public void deletePersonByIdInvalidMockTest() throws DatabaseOperationException {
 
         int invalidId = TestIdGenerator.generateInvalidTestId();
 
@@ -133,7 +133,7 @@ class PersonServiceMockTest {
     }
 
     @Test
-    public void insertPersonMockTest () throws DatabaseOperationException {
+    public void insertPersonMockTest() throws DatabaseOperationException {
 
         Person mockPerson = new Person();
         mockPerson.setId(TestIdGenerator.generateInvalidTestId());
@@ -161,7 +161,7 @@ class PersonServiceMockTest {
     }
 
     @Test
-    public void insertPersonInvalidIdMockTest () throws DatabaseOperationException {
+    public void insertPersonInvalidIdMockTest() throws DatabaseOperationException {
 
         Person mockPerson = new Person();
         mockPerson.setId(TestIdGenerator.generateExistentTestId());

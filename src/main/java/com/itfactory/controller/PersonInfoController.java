@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 class PersonInfoController {
 
     @GetMapping
-    public String getPersonInfo(){
+    public String getPersonInfo() {
 
         return "person-index";
     }

@@ -168,7 +168,7 @@ class PersonRestControllerMockTest {
     }
 
     @Test
-    public void insertPersonInvalidIdMockTest () throws DatabaseOperationException {
+    public void insertPersonInvalidIdMockTest() throws DatabaseOperationException {
 
         Person mockPerson = new Person();
         mockPerson.setId(TestIdGenerator.generateExistentTestId());

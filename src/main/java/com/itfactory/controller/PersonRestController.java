@@ -33,7 +33,7 @@ public class PersonRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getPersonById(@PathVariable String id){
+    public ResponseEntity<String> getPersonById(@PathVariable String id) {
 
         try {
             Person person = personService.getPersonById(Integer.parseInt(id));
@@ -45,7 +45,7 @@ public class PersonRestController {
     }
 
     @PostMapping
-    public ResponseEntity<String> insertPerson(@RequestBody Person person){
+    public ResponseEntity<String> insertPerson(@RequestBody Person person) {
 
         try {
             personService.insertPerson(person);
@@ -57,13 +57,13 @@ public class PersonRestController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<String> getAllPersons(){
+    public ResponseEntity<String> getAllPersons() {
 
         try {
             StringBuilder getAllHtmlResponse = getAllPersonsHtmlResponse();
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Person database retrieved successfully:\n"
-             + "<pre>" + getAllHtmlResponse + "</pre>");
+                            + "<pre>" + getAllHtmlResponse + "</pre>");
         } catch (DatabaseOperationException e) {
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
@@ -72,7 +72,7 @@ public class PersonRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePerson(@PathVariable String id){
+    public ResponseEntity<String> deletePerson(@PathVariable String id) {
 
         try {
             personService.deletePerson(Integer.parseInt(id));
@@ -84,11 +84,11 @@ public class PersonRestController {
     }
 
     @PutMapping("/{id}/{salaryIndex}")
-    public ResponseEntity<String> updateSalaryIndex(@PathVariable String id, @PathVariable String salaryIndex){
+    public ResponseEntity<String> updateSalaryIndex(@PathVariable String id, @PathVariable String salaryIndex) {
 
         try {
 
-            if(salaryIndex.toLowerCase().contains("f") || salaryIndex.toLowerCase().contains("d")) {
+            if (salaryIndex.toLowerCase().contains("f") || salaryIndex.toLowerCase().contains("d")) {
                 throw new DatabaseOperationException("Invalid Input for Salary Index - Please insert numeric values (1 to 3).");
             }
 
@@ -102,7 +102,7 @@ public class PersonRestController {
     }
 
     @GetMapping("/{id}/job")
-    public ResponseEntity<String> getPersonJob(@PathVariable String id){
+    public ResponseEntity<String> getPersonJob(@PathVariable String id) {
 
         try {
             return ResponseEntity.status(HttpStatus.OK).body(personService.getPersonById(Integer.parseInt(id)).getName()
@@ -145,7 +145,7 @@ public class PersonRestController {
         List<Person> persons = personService.getAllPersons();
         StringBuilder htmlResponse = new StringBuilder();
 
-        for (Person personLooped: persons) {
+        for (Person personLooped : persons) {
 
             htmlResponse.append(String.format(
                     "Person id: %2d; name: %18s; email: %25s; job id: %3d; salary index: %3.1f\n",

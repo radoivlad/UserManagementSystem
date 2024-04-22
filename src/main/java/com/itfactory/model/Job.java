@@ -8,7 +8,7 @@ import java.util.Random;
  * Encapsulated class - private fields and setters/getters usable;
  */
 
-public class Job extends BaseModel{
+public class Job extends BaseModel {
 
     private String domain;
 

@@ -37,7 +37,7 @@ class PersonRestControllerIntegrationTest {
     }
 
     @Test
-    public void deletePersonCompleteTest () throws DatabaseOperationException {
+    public void deletePersonCompleteTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
         testPerson.setId(TestIdGenerator.generateInvalidTestId());
@@ -54,7 +54,7 @@ class PersonRestControllerIntegrationTest {
     }
 
     @Test
-    public void getAllPersonsTest () throws DatabaseOperationException {
+    public void getAllPersonsTest() throws DatabaseOperationException {
 
         Person testPerson1 = new Person();
         testPerson1.setId(TestIdGenerator.generateInvalidTestId());
@@ -77,7 +77,7 @@ class PersonRestControllerIntegrationTest {
     }
 
     @Test
-    public void insertPersonCompleteTest () throws DatabaseOperationException {
+    public void insertPersonCompleteTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
         testPerson.setId(TestIdGenerator.generateInvalidTestId());
@@ -93,7 +93,7 @@ class PersonRestControllerIntegrationTest {
     }
 
     @Test
-    public void updateSalaryIndexCompleteTest () throws DatabaseOperationException {
+    public void updateSalaryIndexCompleteTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
         testPerson.setId(TestIdGenerator.generateInvalidTestId());
