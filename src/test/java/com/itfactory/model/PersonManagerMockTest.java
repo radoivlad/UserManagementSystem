@@ -1,9 +1,10 @@
 package com.itfactory.model;
 
 import com.itfactory.dao.JobDao;
-import com.itfactory.dao.JobDaoIntegrationTest;
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.service.JobService;
+import com.itfactory.service.PersonManager;
+import com.itfactory.utility.TestIdGenerator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,11 +36,9 @@ class PersonManagerMockTest {
     @BeforeEach
     void setUp() throws DatabaseOperationException {
 
-        person.setJobId(JobDaoIntegrationTest.generateExistentTestId());
-
-        personManager = new PersonManager(person);
-        personManager.jobDao = jobDao;
-        personManager.jobService = jobService;
+        person.setJobId(TestIdGenerator.generateExistentTestId());
+        personManager = new PersonManager(jobService, jobDao);
+        personManager.setPerson(person);
     }
 
     //creating a mock job, mocking jobDao behaviour, calling the tested method, asserting between initial mock job and obtained job;
@@ -67,7 +66,7 @@ class PersonManagerMockTest {
     @Test
     public void getJobInvalidIdMockTest() throws DatabaseOperationException {
 
-        person.setJobId(JobDaoIntegrationTest.generateInvalidTestId());
+        person.setJobId(TestIdGenerator.generateInvalidTestId());
 
         when(jobDao.getJobById(person.getJobId())).thenThrow(DatabaseOperationException.class);
 
@@ -104,7 +103,7 @@ class PersonManagerMockTest {
     @Test
     public void getSalaryInvalidIdMockTest() throws DatabaseOperationException {
 
-        person.setJobId(JobDaoIntegrationTest.generateInvalidTestId());
+        person.setJobId(TestIdGenerator.generateInvalidTestId());
 
         when(jobDao.getJobById(person.getJobId())).thenThrow(DatabaseOperationException.class);
 
@@ -118,7 +117,7 @@ class PersonManagerMockTest {
     //calling tested method, asserting between custom work experience and obtained work experience, verifying successful calling;
     //invalid scenario - setting invalid salary index for person, mock person to return set salary index, assert if corresponding message is returned;
     @Test
-    public void getWorkExperienceMockTest() {
+    public void getWorkExperienceMockTest() throws DatabaseOperationException {
 
         person.setSalaryIndex(2.0);
 
@@ -140,7 +139,8 @@ class PersonManagerMockTest {
 
         when(person.getSalaryIndex()).thenReturn(invalidSalaryIndex);
 
-        assertTrue(personManager.getWorkExperience().contains("outside of range 1 - 3"));
+        assertThrows(DatabaseOperationException.class,
+                () -> personManager.getWorkExperience().contains("outside of range 1 - 3"));
 
         verify(person, times(2)).getSalaryIndex();
         verify(person, never()).getName();

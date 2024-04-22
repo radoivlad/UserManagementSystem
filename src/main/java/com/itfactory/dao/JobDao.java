@@ -6,13 +6,12 @@ import com.itfactory.model.Job;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.itfactory.dao.ConstantsDao.*;
 
 /**
  * JobDao contains the database manipulation functionality (CRUD) for our job database;
@@ -23,6 +22,15 @@ import static com.itfactory.dao.ConstantsDao.*;
 public class JobDao{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JobDao.class);
+
+    @Value("${db.url}")
+    private String DB_URL;
+
+    @Value("${db.user}")
+    private String DB_USER;
+
+    @Value("${db.pass}")
+    private String DB_PASS;
 
     public Job getJobById(int id) throws DatabaseOperationException {
 
@@ -50,6 +58,7 @@ public class JobDao{
                 System.out.println(retrievedJob);
                 return retrievedJob;
             } else {
+
                 throw new DatabaseOperationException("No job was found in the database with the given id.");
             }
 

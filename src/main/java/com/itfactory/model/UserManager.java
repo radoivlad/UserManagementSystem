@@ -12,5 +12,5 @@ public interface UserManager {
 
     double getSalary() throws DatabaseOperationException;
 
-    String getWorkExperience();
+    String getWorkExperience() throws DatabaseOperationException;
 }

@@ -4,7 +4,6 @@ import com.itfactory.dao.PersonDao;
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
 import com.itfactory.model.Person;
-import com.itfactory.model.PersonManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +19,23 @@ import java.util.List;
 @Service
 public class PersonService {
 
-    //instantiating a PersonDao object;
+    //instantiating PersonDao and PersonManager objects;
     private final PersonDao personDao;
+
+    private PersonManager personManager;
 
     //Defining the constructor, @Autowired permits injection of the PersonDao object;
     @Autowired
     public PersonService(PersonDao personDao) {
 
         this.personDao = personDao;
+    }
+
+    //Injecting the personManager object by setter injection;
+    @Autowired
+    public void setPersonManager(PersonManager personManager) {
+
+        this.personManager = personManager;
     }
 
     //Creating calling methods for each of the PersonDao CRUD methods;
@@ -64,17 +72,20 @@ public class PersonService {
 
     public Job getPersonJob(int id) throws DatabaseOperationException {
 
-        return new PersonManager(getPersonById(id)).getJob();
+        personManager.setPerson(getPersonById(id));
+        return personManager.getJob();
     }
 
     public double getPersonSalary(int id) throws DatabaseOperationException {
 
-        return new PersonManager(getPersonById(id)).getSalary();
+        personManager.setPerson(getPersonById(id));
+        return personManager.getSalary();
     }
 
     public String getPersonWorkExperience(int id) throws DatabaseOperationException {
 
-        return new PersonManager(getPersonById(id)).getWorkExperience();
+        personManager.setPerson(getPersonById(id));
+        return personManager.getWorkExperience();
     }
 
     //validation methods for PersonService;
@@ -82,12 +93,20 @@ public class PersonService {
 
         try {
 
-            if (!person.getName().matches("[a-zA-Z\\s]+") || !person.getEmail().matches("[a-zA-Z\\s@.]+")) {
-                throw new DatabaseOperationException("Please enter letters for name or email!");
+            if (!person.getName().matches("[a-zA-Z\\s]+")) {
+
+                throw new DatabaseOperationException("Invalid Input for Name - Please insert letters only!");
             }
-            if (person.getSalaryIndex() < 1.0 || person.getSalaryIndex() > 3.0) {
+
+            if (!person.getEmail().contains("@") || !person.getEmail().contains(".")) {
+
                 throw new DatabaseOperationException(
-                        "Invalid Input for Salary Index - Please specify a value from 1 to 3!");
+                        "Invalid Input for Email - Please insert a valid email with a standard format: example123@email.com");
+            }
+
+            if (person.getSalaryIndex() < 1.0 || person.getSalaryIndex() > 3.0) {
+
+                throw new DatabaseOperationException("Invalid Input for Salary Index - Please specify a value from 1 to 3!");
             }
         } catch(DatabaseOperationException | NumberFormatException e) {
 
@@ -99,11 +118,12 @@ public class PersonService {
 
         if(getPersonById(id).getSalaryIndex() == salaryIndex) {
 
-            throw new DatabaseOperationException(
-                    "Person's salary index is already " + salaryIndex);
+            throw new DatabaseOperationException("Person's salary index is already " + salaryIndex);
         }
-        if(salaryIndex < 1.0 || salaryIndex > 3.0) throw new DatabaseOperationException(
 
-                "Invalid Input for Salary Index - Please specify a value from 1 to 3!");
+        if(salaryIndex < 1.0 || salaryIndex > 3.0) {
+
+            throw new DatabaseOperationException("Invalid Input for Salary Index - Please specify a value from 1 to 3!");
+        }
     }
 }

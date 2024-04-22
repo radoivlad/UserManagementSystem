@@ -2,6 +2,7 @@ package com.itfactory.dao;
 
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
+import com.itfactory.utility.TestIdGenerator;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,7 +33,7 @@ class JobDaoMockTest {
     @Test
     public void getJobByIdMockTest() throws DatabaseOperationException {
 
-        int existentId = JobDaoIntegrationTest.generateExistentTestId();
+        int existentId = TestIdGenerator.generateExistentTestId();
         Job mockJob = new Job();
         mockJob.setId(existentId);
         mockJob.setName("Test Mock Job");
@@ -51,7 +52,7 @@ class JobDaoMockTest {
     @Test
     public void getJobByIdInvalidMockTest() throws DatabaseOperationException {
 
-        int invalidId = JobDaoIntegrationTest.generateInvalidTestId();
+        int invalidId = TestIdGenerator.generateInvalidTestId();
 
         doThrow(DatabaseOperationException.class).when(jobDao).getJobById(invalidId);
 
@@ -65,7 +66,7 @@ class JobDaoMockTest {
     public void deleteJobMockTest() throws DatabaseOperationException {
 
         Job mockJob = new Job();
-        mockJob.setId(JobDaoIntegrationTest.generateInvalidTestId());
+        mockJob.setId(TestIdGenerator.generateInvalidTestId());
         mockJob.setName("Test Job");
 
         jobDao.insertJob(mockJob);
@@ -80,7 +81,7 @@ class JobDaoMockTest {
     @Test
     public void deleteJobInvalidIdMockTest() throws DatabaseOperationException {
 
-        int invalidId = JobDaoIntegrationTest.generateInvalidTestId();
+        int invalidId = TestIdGenerator.generateInvalidTestId();
 
         doThrow(DatabaseOperationException.class).when(jobDao).deleteJob(invalidId);
 
@@ -94,11 +95,11 @@ class JobDaoMockTest {
     public void getAllJobsMockTest() throws DatabaseOperationException {
 
         Job mockJob1 = new Job();
-        mockJob1.setId(JobDaoIntegrationTest.generateExistentTestId());
+        mockJob1.setId(TestIdGenerator.generateExistentTestId());
         mockJob1.setName("Test Mock Job One");
 
         Job mockJob2 = new Job();
-        mockJob2.setId(JobDaoIntegrationTest.generateExistentTestId());
+        mockJob2.setId(TestIdGenerator.generateExistentTestId() - 1);
         mockJob2.setName("Test Mock Job Two");
 
         List<Job> testJobsInserted = new ArrayList<>(List.of(mockJob1, mockJob2));
@@ -119,7 +120,7 @@ class JobDaoMockTest {
     public void insertJobMockTest() throws DatabaseOperationException {
 
         Job mockJob = new Job();
-        mockJob.setId(JobDaoIntegrationTest.generateInvalidTestId());
+        mockJob.setId(TestIdGenerator.generateInvalidTestId());
         mockJob.setName("Test Mock Job");
         mockJob.setDomain("mock@email.com");
         mockJob.setBaseSalary(3000);
@@ -145,7 +146,7 @@ class JobDaoMockTest {
     public void insertJobInvalidMockTest() throws DatabaseOperationException {
 
         Job mockJob = new Job();
-        mockJob.setId(JobDaoIntegrationTest.generateExistentTestId());
+        mockJob.setId(TestIdGenerator.generateExistentTestId());
 
         doThrow(DatabaseOperationException.class).when(jobDao).insertJob(mockJob);
 
@@ -159,7 +160,7 @@ class JobDaoMockTest {
     public void updateBaseSalaryMockTest() throws DatabaseOperationException {
 
         Job mockJob = new Job();
-        mockJob.setId(JobDaoIntegrationTest.generateExistentTestId());
+        mockJob.setId(TestIdGenerator.generateExistentTestId());
         mockJob.setBaseSalary(3000);
         double newBaseSalary = 4000;
 
@@ -180,7 +181,7 @@ class JobDaoMockTest {
     @Test
     public void updateBaseSalaryInvalidMockTest() throws DatabaseOperationException {
 
-        int invalidId = JobDaoIntegrationTest.generateInvalidTestId();
+        int invalidId = TestIdGenerator.generateInvalidTestId();
 
         Job mockJob = new Job();
         mockJob.setBaseSalary(3000);

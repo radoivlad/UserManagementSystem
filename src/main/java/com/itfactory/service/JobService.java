@@ -70,9 +70,16 @@ public class JobService {
 
         try {
 
-            if (!job.getName().matches("[a-zA-Z\\s]+") || !job.getDomain().matches("[a-zA-Z\\s]+")) {
-                throw new DatabaseOperationException("Please enter letters for name or domain!");
+            if (!job.getName().matches("[a-zA-Z\\s]+")) {
+
+                throw new DatabaseOperationException("Invalid Input for Name - Please insert letters only!");
             }
+
+            if(!job.getDomain().matches("[a-zA-Z\\s]+")) {
+
+                throw new DatabaseOperationException("Invalid Input for Domain - Please insert letters only!");
+            }
+
             if (job.getBaseSalary() < 500) {
 
                 throw new DatabaseOperationException(

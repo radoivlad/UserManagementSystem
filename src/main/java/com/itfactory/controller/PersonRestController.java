@@ -45,19 +45,14 @@ public class PersonRestController {
     }
 
     @PostMapping
-    public ResponseEntity<String> insertPerson(
-            @RequestBody Person person){
+    public ResponseEntity<String> insertPerson(@RequestBody Person person){
 
         try {
             personService.insertPerson(person);
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Person inserted successfully.");
+            return ResponseEntity.status(HttpStatus.OK).body("Person inserted successfully.");
         } catch (DatabaseOperationException e) {
 
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to insert person: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to insert person: " + e.getMessage());
         }
     }
 
@@ -81,12 +76,10 @@ public class PersonRestController {
 
         try {
             personService.deletePerson(Integer.parseInt(id));
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body("Person deleted successfully");
+            return ResponseEntity.status(HttpStatus.OK).body("Person deleted successfully");
         } catch (DatabaseOperationException | NumberFormatException e) {
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to delete person: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete person: " + e.getMessage());
         }
     }
 
@@ -94,6 +87,11 @@ public class PersonRestController {
     public ResponseEntity<String> updateSalaryIndex(@PathVariable String id, @PathVariable String salaryIndex){
 
         try {
+
+            if(salaryIndex.toLowerCase().contains("f") || salaryIndex.toLowerCase().contains("d")) {
+                throw new DatabaseOperationException("Invalid Input for Salary Index - Please insert numeric values (1 to 3).");
+            }
+
             personService.updateSalaryIndex(Integer.parseInt(id), Double.parseDouble(salaryIndex));
             return ResponseEntity.status(HttpStatus.OK).body("Person's salary index updated successfully");
         } catch (DatabaseOperationException | NumberFormatException e) {

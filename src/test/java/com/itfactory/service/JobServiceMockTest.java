@@ -1,10 +1,10 @@
 package com.itfactory.service;
 
 import com.itfactory.dao.JobDao;
-import com.itfactory.dao.JobDaoIntegrationTest;
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
 import com.itfactory.model.Person;
+import com.itfactory.utility.TestIdGenerator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,7 +45,7 @@ class JobServiceMockTest {
     @Test
     public void getJobByIdMockTest() throws DatabaseOperationException {
 
-        int existentId = JobDaoIntegrationTest.generateExistentTestId();
+        int existentId = TestIdGenerator.generateExistentTestId();
         Job mockJob = new Job();
         mockJob.setId(existentId);
         mockJob.setName("Mock Job");
@@ -64,7 +64,7 @@ class JobServiceMockTest {
     @Test
     public void getJobByIdInvalidMockTest () throws DatabaseOperationException {
 
-        int invalidId = JobDaoIntegrationTest.generateInvalidTestId();
+        int invalidId = TestIdGenerator.generateInvalidTestId();
 
         doThrow(DatabaseOperationException.class).when(jobDao).getJobById(invalidId);
 
@@ -78,7 +78,7 @@ class JobServiceMockTest {
     public void deleteJobMockTest() throws DatabaseOperationException {
 
         Job mockJob = new Job();
-        mockJob.setId(JobDaoIntegrationTest.generateInvalidTestId());
+        mockJob.setId(TestIdGenerator.generateInvalidTestId());
         mockJob.setName("Mock Job");
         mockJob.setDomain("Mock Job Domain");
         mockJob.setBaseSalary(3000);
@@ -98,7 +98,7 @@ class JobServiceMockTest {
     @Test
     public void deleteJobByIdInvalidMockTest () throws DatabaseOperationException {
 
-        int invalidId = JobDaoIntegrationTest.generateInvalidTestId();
+        int invalidId = TestIdGenerator.generateInvalidTestId();
 
         doThrow(DatabaseOperationException.class).when(jobDao).getJobById(invalidId);
 
@@ -113,10 +113,10 @@ class JobServiceMockTest {
     public void getAllJobsMockTest() throws DatabaseOperationException {
 
         Job mockJob1 = new Job();
-        mockJob1.setId(JobDaoIntegrationTest.generateExistentTestId());
+        mockJob1.setId(TestIdGenerator.generateExistentTestId());
 
         Job mockJob2 = new Job();
-        mockJob2.setId(JobDaoIntegrationTest.generateExistentTestId());
+        mockJob2.setId(TestIdGenerator.generateExistentTestId() + 1);
 
         List<Job> testJobsInserted = new ArrayList<>(List.of(mockJob1, mockJob2));
 
@@ -136,7 +136,7 @@ class JobServiceMockTest {
     public void insertJobMockTest () throws DatabaseOperationException {
 
         Job mockJob = new Job();
-        mockJob.setId(JobDaoIntegrationTest.generateInvalidTestId());
+        mockJob.setId(TestIdGenerator.generateInvalidTestId());
         mockJob.setName("Mock Job");
         mockJob.setDomain("Mock Job Domain");
         mockJob.setBaseSalary(3000);
@@ -162,7 +162,7 @@ class JobServiceMockTest {
     public void insertJobInvalidIdMockTest () throws DatabaseOperationException {
 
         Job mockJob = new Job();
-        mockJob.setId(JobDaoIntegrationTest.generateExistentTestId());
+        mockJob.setId(TestIdGenerator.generateExistentTestId());
         mockJob.setName("Mock Job");
         mockJob.setDomain("Mock Job Domain");
         mockJob.setBaseSalary(3000);
@@ -179,7 +179,7 @@ class JobServiceMockTest {
     public void updateBaseSalaryMockTest() throws DatabaseOperationException {
 
         Job mockJob = new Job();
-        mockJob.setId(JobDaoIntegrationTest.generateExistentTestId());
+        mockJob.setId(TestIdGenerator.generateExistentTestId());
         mockJob.setBaseSalary(3000);
         double newBaseSalary = 4000;
 
@@ -202,10 +202,10 @@ class JobServiceMockTest {
     @Test
     public void updateBaseSalaryInvalidMockTest() throws DatabaseOperationException {
 
-        int invalidId = JobDaoIntegrationTest.generateInvalidTestId();
+        int invalidId = TestIdGenerator.generateInvalidTestId();
 
         Job mockJob = new Job();
-        mockJob.setId(JobDaoIntegrationTest.generateExistentTestId());
+        mockJob.setId(TestIdGenerator.generateExistentTestId());
         mockJob.setBaseSalary(3000);
         double existingBaseSalary = 3000;
 

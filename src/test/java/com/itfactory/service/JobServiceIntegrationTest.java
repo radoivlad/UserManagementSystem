@@ -1,10 +1,9 @@
 package com.itfactory.service;
 
-import com.itfactory.dao.*;
-import com.itfactory.dao.JobDaoIntegrationTest;
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
 import com.itfactory.model.Person;
+import com.itfactory.utility.TestIdGenerator;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,10 +25,13 @@ public class JobServiceIntegrationTest {
     @Autowired
     private JobService jobService;
 
+    @Autowired
+    private PersonService personService;
+
     @Test
     public void getJobById() throws DatabaseOperationException {
 
-        int existentId = JobDaoIntegrationTest.generateExistentTestId();
+        int existentId = TestIdGenerator.generateExistentTestId();
 
         assertDoesNotThrow(() -> jobService.getJobById(existentId));
 
@@ -43,14 +45,14 @@ public class JobServiceIntegrationTest {
     public void getJobByInvalidIdTest (){
 
         assertThrows(DatabaseOperationException.class,
-                () -> jobService.getJobById(JobDaoIntegrationTest.generateInvalidTestId()));
+                () -> jobService.getJobById(TestIdGenerator.generateInvalidTestId()));
     }
 
     @Test
     public void deleteJobTest () throws DatabaseOperationException {
 
         Job testJob = new Job();
-        testJob.setId(JobDaoIntegrationTest.generateInvalidTestId());
+        testJob.setId(TestIdGenerator.generateInvalidTestId());
         testJob.setName("Test Job");
         testJob.setDomain("Test Domain");
 
@@ -66,7 +68,7 @@ public class JobServiceIntegrationTest {
     public void deleteJobByInvalidIdTest (){
 
         assertThrows(DatabaseOperationException.class,
-                () -> jobService.deleteJob(JobDaoIntegrationTest.generateInvalidTestId()));
+                () -> jobService.deleteJob(TestIdGenerator.generateInvalidTestId()));
     }
 
     @Test
@@ -75,13 +77,13 @@ public class JobServiceIntegrationTest {
         int actualListSize = jobService.getAllJobs().size();
 
         Job testJob1 = new Job();
-        testJob1.setId(JobDaoIntegrationTest.generateInvalidTestId());
+        testJob1.setId(TestIdGenerator.generateInvalidTestId());
         testJob1.setName("Test Job One");
         testJob1.setDomain("Test Domain");
         jobService.insertJob(testJob1);
 
         Job testJob2 = new Job();
-        testJob2.setId(JobDaoIntegrationTest.generateInvalidTestId());
+        testJob2.setId(TestIdGenerator.generateInvalidTestId() - 1);
         testJob2.setName("Test Job Two");
         testJob2.setDomain("Test Domain");
         jobService.insertJob(testJob2);
@@ -99,7 +101,7 @@ public class JobServiceIntegrationTest {
     public void insertJobTest () throws DatabaseOperationException {
 
         Job testJob = new Job();
-        testJob.setId(JobDaoIntegrationTest.generateInvalidTestId());
+        testJob.setId(TestIdGenerator.generateInvalidTestId());
         testJob.setName("Test Job");
         testJob.setDomain("Test Domain");
         testJob.setBaseSalary(2000);
@@ -121,7 +123,7 @@ public class JobServiceIntegrationTest {
     public void insertJobInvalidInputTest (){
 
        assertThrows(DatabaseOperationException.class,
-               () -> jobService.insertJob(jobService.getJobById(JobDaoIntegrationTest.generateExistentTestId()))
+               () -> jobService.insertJob(jobService.getJobById(TestIdGenerator.generateExistentTestId()))
        );
     }
 
@@ -129,7 +131,7 @@ public class JobServiceIntegrationTest {
     public void updateBaseSalaryTest () throws DatabaseOperationException {
 
         Job testJob = new Job();
-        testJob.setId(JobDaoIntegrationTest.generateInvalidTestId());
+        testJob.setId(TestIdGenerator.generateInvalidTestId());
         testJob.setName("Test Job");
         testJob.setDomain("Test Domain");
         testJob.setBaseSalary(1000);
@@ -150,11 +152,11 @@ public class JobServiceIntegrationTest {
 
         //invalid scenario 1 - update base salary of invalid id;
         assertThrows(DatabaseOperationException.class,
-                () -> jobService.updateBaseSalary(JobDaoIntegrationTest.generateInvalidTestId(), 2000));
+                () -> jobService.updateBaseSalary(TestIdGenerator.generateInvalidTestId(), 2000));
 
         //invalid scenario 2 - update base salary of valid id, but existing base salary;
         Job testJob = new Job();
-        testJob.setId(JobDaoIntegrationTest.generateInvalidTestId());
+        testJob.setId(TestIdGenerator.generateInvalidTestId());
         testJob.setName("Test Job");
         testJob.setDomain("Test Domain");
         testJob.setBaseSalary(2000);
@@ -185,23 +187,23 @@ public class JobServiceIntegrationTest {
     void calculateSalaryInvalidInputsTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
+        testPerson.setId(TestIdGenerator.generateInvalidTestId());
         testPerson.setSalaryIndex(5);
 
         Job testJob = new Job();
-        testJob.setId(JobDaoIntegrationTest.generateInvalidTestId());
+        testJob.setId(TestIdGenerator.generateInvalidTestId());
         testJob.setBaseSalary(300);
 
         assertThrows(DatabaseOperationException.class,
                 () -> jobService.calculateSalary(
                         testPerson,
-                        jobService.getJobById(JobDaoIntegrationTest.generateExistentTestId())
+                        jobService.getJobById(TestIdGenerator.generateExistentTestId())
                 )
         );
 
         assertThrows(DatabaseOperationException.class,
                 () -> jobService.calculateSalary(
-                        new PersonService(new PersonDao()).getPersonById(PersonDaoIntegrationTest.generateExistentTestId()),
+                        personService.getPersonById(TestIdGenerator.generateExistentTestId()),
                         testJob
                 )
         );

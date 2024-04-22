@@ -1,9 +1,8 @@
 package com.itfactory.controller;
 
-import com.itfactory.dao.JobDaoIntegrationTest;
-import com.itfactory.dao.PersonDaoIntegrationTest;
 import com.itfactory.model.Person;
 import com.itfactory.exceptions.DatabaseOperationException;
+import com.itfactory.utility.TestIdGenerator;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,24 +26,24 @@ class PersonRestControllerIntegrationTest {
     @Test
     public void getPersonByIdCompleteTest() throws DatabaseOperationException {
 
-        int existentId = PersonDaoIntegrationTest.generateExistentTestId();
+        int existentId = TestIdGenerator.generateExistentTestId();
 
         assertDoesNotThrow(() -> personRestController.getPersonById(String.valueOf(existentId)));
 
         assertTrue(personRestController.getPersonById(String.valueOf(existentId)).toString().contains("successfully"));
 
         assertTrue(personRestController.getPersonById(
-                String.valueOf(PersonDaoIntegrationTest.generateInvalidTestId())).toString().contains("Failed"));
+                String.valueOf(TestIdGenerator.generateInvalidTestId())).toString().contains("Failed"));
     }
 
     @Test
     public void deletePersonCompleteTest () throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
+        testPerson.setId(TestIdGenerator.generateInvalidTestId());
         testPerson.setName("Test Person");
-        testPerson.setEmail("Test Email");
-        testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        testPerson.setEmail("test@email.com");
+        testPerson.setJobId(TestIdGenerator.generateExistentTestId());
 
         personRestController.insertPerson(testPerson);
 
@@ -58,17 +57,17 @@ class PersonRestControllerIntegrationTest {
     public void getAllPersonsTest () throws DatabaseOperationException {
 
         Person testPerson1 = new Person();
-        testPerson1.setId(PersonDaoIntegrationTest.generateInvalidTestId());
+        testPerson1.setId(TestIdGenerator.generateInvalidTestId());
         testPerson1.setName("Test Person One");
         testPerson1.setEmail("Test Email");
-        testPerson1.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        testPerson1.setJobId(TestIdGenerator.generateExistentTestId());
         personRestController.insertPerson(testPerson1);
 
         Person testPerson2 = new Person();
-        testPerson2.setId(PersonDaoIntegrationTest.generateInvalidTestId());
+        testPerson2.setId(TestIdGenerator.generateInvalidTestId() - 1);
         testPerson2.setName("Test Person Two");
         testPerson2.setEmail("Test Email");
-        testPerson2.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        testPerson2.setJobId(TestIdGenerator.generateExistentTestId());
         personRestController.insertPerson(testPerson2);
 
         assertTrue(personRestController.getAllPersons().toString().contains("successfully"));
@@ -81,10 +80,10 @@ class PersonRestControllerIntegrationTest {
     public void insertPersonCompleteTest () throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
+        testPerson.setId(TestIdGenerator.generateInvalidTestId());
         testPerson.setName("Test Person");
-        testPerson.setEmail("Test Email");
-        testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        testPerson.setEmail("test@email.com");
+        testPerson.setJobId(TestIdGenerator.generateExistentTestId());
 
         assertTrue(personRestController.insertPerson(testPerson).toString().contains("successfully"));
 
@@ -97,10 +96,10 @@ class PersonRestControllerIntegrationTest {
     public void updateSalaryIndexCompleteTest () throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
+        testPerson.setId(TestIdGenerator.generateInvalidTestId());
         testPerson.setName("Test Person");
-        testPerson.setEmail("Test Email");
-        testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        testPerson.setEmail("test@email.com");
+        testPerson.setJobId(TestIdGenerator.generateExistentTestId());
         testPerson.setSalaryIndex(2);
         double newSalaryIndex = 2.5;
 
@@ -122,10 +121,10 @@ class PersonRestControllerIntegrationTest {
     public void getPersonJobCompleteTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
+        testPerson.setId(TestIdGenerator.generateInvalidTestId());
         testPerson.setName("Test Person");
-        testPerson.setEmail("Test Email");
-        testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        testPerson.setEmail("test@email.com");
+        testPerson.setJobId(TestIdGenerator.generateExistentTestId());
 
         personRestController.insertPerson(testPerson);
 
@@ -140,10 +139,10 @@ class PersonRestControllerIntegrationTest {
     public void getPersonSalaryCompleteTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
+        testPerson.setId(TestIdGenerator.generateInvalidTestId());
         testPerson.setName("Test Person");
-        testPerson.setEmail("Test Email");
-        testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        testPerson.setEmail("test@email.com");
+        testPerson.setJobId(TestIdGenerator.generateExistentTestId());
 
         personRestController.insertPerson(testPerson);
 
@@ -158,10 +157,10 @@ class PersonRestControllerIntegrationTest {
     public void getPersonWorkExperienceCompleteTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
+        testPerson.setId(TestIdGenerator.generateInvalidTestId());
         testPerson.setName("Test Person");
-        testPerson.setEmail("Test Email");
-        testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        testPerson.setEmail("test@email.com");
+        testPerson.setJobId(TestIdGenerator.generateExistentTestId());
 
         personRestController.insertPerson(testPerson);
 

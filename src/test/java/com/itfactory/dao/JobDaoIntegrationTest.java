@@ -2,6 +2,7 @@ package com.itfactory.dao;
 
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
+import com.itfactory.utility.TestIdGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,14 +26,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class JobDaoIntegrationTest {
-    
+
     @Autowired
     private JobDao jobDao;
 
     @Test
     public void getJobByIdTest() throws DatabaseOperationException {
 
-        int existentId = generateExistentTestId();
+        int existentId = TestIdGenerator.generateExistentTestId();
 
         assertDoesNotThrow(() -> jobDao.getJobById(existentId));
 
@@ -47,14 +47,14 @@ public class JobDaoIntegrationTest {
     public void getJobByIdInvalidTest() {
 
         assertThrows(DatabaseOperationException.class,
-                () -> jobDao.getJobById(generateInvalidTestId()));
+                () -> jobDao.getJobById(TestIdGenerator.generateInvalidTestId()));
     }
 
     @Test
     public void deleteJobTest() throws DatabaseOperationException {
 
         Job testJob = new Job();
-        testJob.setId(generateInvalidTestId());
+        testJob.setId(TestIdGenerator.generateInvalidTestId());
         testJob.setName("Test Job");
         testJob.setDomain("Test Job Domain");
         testJob.setBaseSalary(3000);
@@ -71,7 +71,7 @@ public class JobDaoIntegrationTest {
     public void deleteJobInvalidTest() {
 
         assertThrows(DatabaseOperationException.class,
-                () -> jobDao.deleteJob(generateInvalidTestId()));
+                () -> jobDao.deleteJob(TestIdGenerator.generateInvalidTestId()));
     }
 
     @Test
@@ -80,14 +80,14 @@ public class JobDaoIntegrationTest {
         int actualListSize = jobDao.getAllJobs().size();
 
         Job testJob1 = new Job();
-        testJob1.setId(generateInvalidTestId());
+        testJob1.setId(TestIdGenerator.generateInvalidTestId());
         testJob1.setName("Test Job 1");
         testJob1.setDomain("Test Job 1 Domain");
         testJob1.setBaseSalary(3000);
         jobDao.insertJob(testJob1);
 
         Job testJob2 = new Job();
-        testJob2.setId(generateInvalidTestId());
+        testJob2.setId(TestIdGenerator.generateInvalidTestId() - 1);
         testJob2.setName("Test Job 2");
         testJob2.setDomain("Test Job 2 Domain");
         testJob2.setBaseSalary(4000);
@@ -106,7 +106,7 @@ public class JobDaoIntegrationTest {
     public void insertJobTest() throws DatabaseOperationException {
 
         Job testJob = new Job();
-        testJob.setId(generateInvalidTestId());
+        testJob.setId(TestIdGenerator.generateInvalidTestId());
         testJob.setName("Test Job");
         testJob.setDomain("Test Domain");
         testJob.setBaseSalary(1000);
@@ -128,7 +128,7 @@ public class JobDaoIntegrationTest {
     public void insertJobInvalidTest() throws DatabaseOperationException {
 
         Job testJob = new Job();
-        testJob.setId(generateExistentTestId());
+        testJob.setId(TestIdGenerator.generateExistentTestId());
 
         assertThrows(DatabaseOperationException.class, () -> jobDao.insertJob(testJob));
     }
@@ -137,7 +137,7 @@ public class JobDaoIntegrationTest {
     public void updateBaseSalaryTest() throws DatabaseOperationException {
 
         Job testJob = new Job();
-        testJob.setId(generateInvalidTestId());
+        testJob.setId(TestIdGenerator.generateInvalidTestId());
         testJob.setName("Test Job");
         testJob.setDomain("Test Job Domain");
         testJob.setBaseSalary(1000);
@@ -157,7 +157,7 @@ public class JobDaoIntegrationTest {
     public void updateBaseSalaryInvalidTest() {
 
         assertThrows(DatabaseOperationException.class,
-                () -> jobDao.updateBaseSalary(generateInvalidTestId(), 4000));
+                () -> jobDao.updateBaseSalary(TestIdGenerator.generateInvalidTestId(), 4000));
     }
 
     @Test
@@ -178,40 +178,4 @@ public class JobDaoIntegrationTest {
             assertEquals("No suitable driver found for testUrl", e.getMessage());
         }
     }
-
-    public static int generateInvalidTestId() throws DatabaseOperationException {
-
-        JobDao jobDao = new JobDao();
-        boolean flag = true;
-        int testId = 0;
-
-        while(flag) {
-
-            flag = false;
-            testId = new Random().nextInt();
-            for(Job job: jobDao.getAllJobs()) {
-                if(job.getId() == testId) flag = true;
-            }
-
-            if(!flag) return testId;
-        }
-        return 0;
-    }
-
-    public static int generateExistentTestId() throws DatabaseOperationException {
-
-        JobDao jobDao = new JobDao();
-        boolean flag = true;
-        int testId = 0;
-
-        while(flag) {
-
-            testId = new Random().nextInt(100, 110);
-            for(Job job: jobDao.getAllJobs()) {
-                if(job.getId() == testId) return testId;
-            }
-        }
-        return 0;
-    }
-
 }

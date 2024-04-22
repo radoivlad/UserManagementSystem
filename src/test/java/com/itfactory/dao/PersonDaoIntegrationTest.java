@@ -2,6 +2,7 @@ package com.itfactory.dao;
 
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Person;
+import com.itfactory.utility.TestIdGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -12,8 +13,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,7 +38,7 @@ public class PersonDaoIntegrationTest {
     @Test
     public void getPersonByIdTest() throws DatabaseOperationException {
 
-        int existentId = generateExistentTestId();
+        int existentId = TestIdGenerator.generateExistentTestId();
 
         assertDoesNotThrow(() -> personDao.getPersonById(existentId));
 
@@ -46,11 +47,12 @@ public class PersonDaoIntegrationTest {
         assertNotNull(foundTestPersonById);
         assertEquals(existentId, foundTestPersonById.getId());
     }
+
     @Test
     public void getPersonByIdInvalidTest() {
 
         assertThrows(DatabaseOperationException.class,
-                () -> personDao.getPersonById(generateInvalidTestId()));
+                () -> personDao.getPersonById(TestIdGenerator.generateInvalidTestId()));
     }
 
     //generate person, insert, delete, verify successful removal (a subsequent extraction throws exception);
@@ -59,10 +61,10 @@ public class PersonDaoIntegrationTest {
     public void deletePersonTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(generateInvalidTestId());
+        testPerson.setId(TestIdGenerator.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("Test Person Email");
-        testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        testPerson.setJobId(TestIdGenerator.generateExistentTestId());
 
         personDao.insertPerson(testPerson);
 
@@ -76,7 +78,7 @@ public class PersonDaoIntegrationTest {
     public void deletePersonInvalidTest() {
 
         assertThrows(DatabaseOperationException.class,
-                () -> personDao.deletePerson(generateInvalidTestId()));
+                () -> personDao.deletePerson(TestIdGenerator.generateInvalidTestId()));
     }
 
     //generate persons, insert, extract all persons, verify successful extraction (not null result, new list size increased accordingly);
@@ -86,17 +88,17 @@ public class PersonDaoIntegrationTest {
         int actualListSize = personDao.getAllPersons().size();
 
         Person testPerson1 = new Person();
-        testPerson1.setId(generateInvalidTestId());
+        testPerson1.setId(TestIdGenerator.generateInvalidTestId());
         testPerson1.setName("Test Person 1");
         testPerson1.setEmail("Test Person 1 Email");
-        testPerson1.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        testPerson1.setJobId(TestIdGenerator.generateExistentTestId());
         personDao.insertPerson(testPerson1);
 
         Person testPerson2 = new Person();
-        testPerson2.setId(generateInvalidTestId());
+        testPerson2.setId(TestIdGenerator.generateInvalidTestId() - 1);
         testPerson2.setName("Test Person 2");
         testPerson2.setEmail("Test Person 2 Email");
-        testPerson2.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        testPerson2.setJobId(TestIdGenerator.generateExistentTestId());
         personDao.insertPerson(testPerson2);
 
         List<Person> testPersonsInserted = personDao.getAllPersons();
@@ -114,10 +116,10 @@ public class PersonDaoIntegrationTest {
     public void insertPersonTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(generateInvalidTestId());
+        testPerson.setId(TestIdGenerator.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("test@email.com");
-        testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        testPerson.setJobId(TestIdGenerator.generateExistentTestId());
         testPerson.setSalaryIndex(2);
 
         personDao.insertPerson(testPerson);
@@ -138,7 +140,7 @@ public class PersonDaoIntegrationTest {
     public void insertPersonInvalidTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(generateExistentTestId());
+        testPerson.setId(TestIdGenerator.generateExistentTestId());
 
         assertThrows(DatabaseOperationException.class, () -> personDao.insertPerson(testPerson));
     }
@@ -149,10 +151,10 @@ public class PersonDaoIntegrationTest {
     public void updateSalaryIndexTest() throws DatabaseOperationException {
 
         Person testPerson = new Person();
-        testPerson.setId(generateInvalidTestId());
+        testPerson.setId(TestIdGenerator.generateInvalidTestId());
         testPerson.setName("Test Person");
         testPerson.setEmail("Test Person Email");
-        testPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        testPerson.setJobId(TestIdGenerator.generateExistentTestId());
         testPerson.setSalaryIndex(2);
         double newSalaryIndex = 2.5;
 
@@ -170,7 +172,7 @@ public class PersonDaoIntegrationTest {
     public void updateSalaryIndexInvalidTest() {
 
         assertThrows(DatabaseOperationException.class,
-                () -> personDao.updateSalaryIndex(generateInvalidTestId(), 2.0));
+                () -> personDao.updateSalaryIndex(TestIdGenerator.generateInvalidTestId(), 2.0));
     }
 
     //verify method behaviour to bad connection parameters (catch clause);
@@ -189,41 +191,6 @@ public class PersonDaoIntegrationTest {
         } catch(SQLException e){
             assertEquals("No suitable driver found for testUrl", e.getMessage());
         }
-    }
-
-    //helper methods that generate existent and non-existent database id;
-    public static int generateInvalidTestId() throws DatabaseOperationException {
-
-        PersonDao personDao = new PersonDao();
-        boolean flag = true;
-        int testId = 0;
-
-        while(flag) {
-
-            flag = false;
-            testId = new Random().nextInt();
-            for(Person person: personDao.getAllPersons()) {
-                if(person.getId() == testId) flag = true;
-            }
-
-            if(!flag) return testId;
-        }
-        return 0;
-    }
-    public static int generateExistentTestId() throws DatabaseOperationException {
-
-        PersonDao personDao = new PersonDao();
-        boolean flag = true;
-        int testId = 0;
-
-        while(flag) {
-
-            testId = new Random().nextInt(0, 5);
-            for(Person person: personDao.getAllPersons()) {
-                if(person.getId() == testId) return testId;
-            }
-        }
-        return 0;
     }
 }
 

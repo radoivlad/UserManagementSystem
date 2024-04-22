@@ -1,11 +1,10 @@
 package com.itfactory.controller;
 
-import com.itfactory.dao.JobDaoIntegrationTest;
-import com.itfactory.dao.PersonDaoIntegrationTest;
 import com.itfactory.exceptions.DatabaseOperationException;
 import com.itfactory.model.Job;
 import com.itfactory.model.Person;
 import com.itfactory.service.PersonService;
+import com.itfactory.utility.TestIdGenerator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,7 +46,7 @@ class PersonRestControllerMockTest {
     @Test
     public void getPersonByIdMockTest() throws DatabaseOperationException {
 
-        int existentId = PersonDaoIntegrationTest.generateExistentTestId();
+        int existentId = TestIdGenerator.generateExistentTestId();
         Person mockPerson = new Person();
         mockPerson.setId(existentId);
         mockPerson.setName("Test Mock Person");
@@ -66,7 +65,7 @@ class PersonRestControllerMockTest {
     @Test
     public void getPersonByIdInvalidMockTest() throws DatabaseOperationException {
 
-        int invalidId = PersonDaoIntegrationTest.generateInvalidTestId();
+        int invalidId = TestIdGenerator.generateInvalidTestId();
 
         doThrow(DatabaseOperationException.class).when(personService).getPersonById(invalidId);
 
@@ -83,10 +82,10 @@ class PersonRestControllerMockTest {
     public void deletePersonMockTest() throws DatabaseOperationException {
 
         Person mockPerson = new Person();
-        mockPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
+        mockPerson.setId(TestIdGenerator.generateInvalidTestId());
         mockPerson.setName("Test Mock Person");
         mockPerson.setEmail("Email Mock Person");
-        mockPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        mockPerson.setJobId(TestIdGenerator.generateExistentTestId());
 
         ResponseEntity<String> insertMockResponse = personRestController.insertPerson(mockPerson);
 
@@ -106,7 +105,7 @@ class PersonRestControllerMockTest {
     @Test
     public void deletePersonByIdInvalidMockTest() throws DatabaseOperationException {
 
-        int invalidId = PersonDaoIntegrationTest.generateInvalidTestId();
+        int invalidId = TestIdGenerator.generateInvalidTestId();
 
         doThrow(DatabaseOperationException.class).when(personService).deletePerson(invalidId);
 
@@ -123,10 +122,10 @@ class PersonRestControllerMockTest {
     public void getAllPersonsMockTest() throws DatabaseOperationException {
 
         Person mockPerson1 = new Person();
-        mockPerson1.setId(PersonDaoIntegrationTest.generateExistentTestId());
+        mockPerson1.setId(TestIdGenerator.generateExistentTestId());
 
         Person mockPerson2 = new Person();
-        mockPerson2.setId(PersonDaoIntegrationTest.generateExistentTestId());
+        mockPerson2.setId(TestIdGenerator.generateExistentTestId() + 1);
 
         List<Person> testPersonsInserted = new ArrayList<>(List.of(mockPerson1, mockPerson2));
 
@@ -145,10 +144,10 @@ class PersonRestControllerMockTest {
     public void insertPersonMockTest() throws DatabaseOperationException {
 
         Person mockPerson = new Person();
-        mockPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
+        mockPerson.setId(TestIdGenerator.generateInvalidTestId());
         mockPerson.setName("Test Mock Person");
         mockPerson.setEmail("test@email.com");
-        mockPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        mockPerson.setJobId(TestIdGenerator.generateExistentTestId());
         mockPerson.setSalaryIndex(2);
 
         ResponseEntity<String> insertMockResponse = personRestController.insertPerson(mockPerson);
@@ -172,10 +171,10 @@ class PersonRestControllerMockTest {
     public void insertPersonInvalidIdMockTest () throws DatabaseOperationException {
 
         Person mockPerson = new Person();
-        mockPerson.setId(PersonDaoIntegrationTest.generateExistentTestId());
+        mockPerson.setId(TestIdGenerator.generateExistentTestId());
         mockPerson.setName("Test Mock Person");
         mockPerson.setEmail("test@email.com");
-        mockPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        mockPerson.setJobId(TestIdGenerator.generateExistentTestId());
         mockPerson.setSalaryIndex(2);
 
         doThrow(DatabaseOperationException.class).when(personService).insertPerson(mockPerson);
@@ -193,7 +192,7 @@ class PersonRestControllerMockTest {
     public void updateSalaryIndexMockTest() throws DatabaseOperationException {
 
         Person mockPerson = new Person();
-        mockPerson.setId(PersonDaoIntegrationTest.generateExistentTestId());
+        mockPerson.setId(TestIdGenerator.generateExistentTestId());
         mockPerson.setSalaryIndex(2);
         double newSalaryIndex = 2.5;
 
@@ -216,10 +215,10 @@ class PersonRestControllerMockTest {
     @Test
     public void updateSalaryIndexInvalidMockTest() throws DatabaseOperationException {
 
-        int invalidId = PersonDaoIntegrationTest.generateInvalidTestId();
+        int invalidId = TestIdGenerator.generateInvalidTestId();
 
         Person mockPerson = new Person();
-        mockPerson.setId(PersonDaoIntegrationTest.generateExistentTestId());
+        mockPerson.setId(TestIdGenerator.generateExistentTestId());
         mockPerson.setSalaryIndex(2.0);
         double existingSalaryIndex = 2.0;
 
@@ -248,8 +247,8 @@ class PersonRestControllerMockTest {
     public void getPersonJobMockTest() throws DatabaseOperationException {
 
         Person mockPerson = new Person();
-        mockPerson.setId(PersonDaoIntegrationTest.generateExistentTestId());
-        mockPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        mockPerson.setId(TestIdGenerator.generateExistentTestId());
+        mockPerson.setJobId(TestIdGenerator.generateExistentTestId());
 
         Job mockJob = new Job();
         mockJob.setId(mockPerson.getJobId());
@@ -272,7 +271,7 @@ class PersonRestControllerMockTest {
 
         //invalid scenario 1 - invalid person id;
         Person mockPerson = new Person();
-        mockPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
+        mockPerson.setId(TestIdGenerator.generateInvalidTestId());
 
         doThrow(DatabaseOperationException.class).when(personService).getPersonById(mockPerson.getId());
 
@@ -285,8 +284,8 @@ class PersonRestControllerMockTest {
         verify(personService, never()).getPersonJob(mockPerson.getId());
 
         //invalid scenario 2 - valid person id, invalid job id;
-        mockPerson.setId(PersonDaoIntegrationTest.generateExistentTestId());
-        mockPerson.setJobId(JobDaoIntegrationTest.generateInvalidTestId());
+        mockPerson.setId(TestIdGenerator.generateExistentTestId());
+        mockPerson.setJobId(TestIdGenerator.generateInvalidTestId());
 
         when(personService.getPersonById(mockPerson.getId())).thenReturn(mockPerson);
         doThrow(DatabaseOperationException.class).when(personService).getPersonJob(mockPerson.getId());
@@ -305,8 +304,8 @@ class PersonRestControllerMockTest {
     public void getPersonSalaryMockTest() throws DatabaseOperationException {
 
         Person mockPerson = new Person();
-        mockPerson.setId(PersonDaoIntegrationTest.generateExistentTestId());
-        mockPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        mockPerson.setId(TestIdGenerator.generateExistentTestId());
+        mockPerson.setJobId(TestIdGenerator.generateExistentTestId());
         mockPerson.setSalaryIndex(2.0);
 
         Job mockJob = new Job();
@@ -330,8 +329,8 @@ class PersonRestControllerMockTest {
     public void getPersonSalaryInvalidIdMockTest() throws DatabaseOperationException {
 
         Person mockPerson = new Person();
-        mockPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
-        mockPerson.setJobId(JobDaoIntegrationTest.generateExistentTestId());
+        mockPerson.setId(TestIdGenerator.generateInvalidTestId());
+        mockPerson.setJobId(TestIdGenerator.generateExistentTestId());
         mockPerson.setSalaryIndex(2.0);
 
         Job mockJob = new Job();
@@ -354,7 +353,7 @@ class PersonRestControllerMockTest {
     public void getPersonWorkExperienceMockTest() throws DatabaseOperationException {
 
         Person mockPerson = new Person();
-        mockPerson.setId(PersonDaoIntegrationTest.generateExistentTestId());
+        mockPerson.setId(TestIdGenerator.generateExistentTestId());
         mockPerson.setSalaryIndex(2.0);
 
         when(personService.getPersonById(mockPerson.getId())).thenReturn(mockPerson);
@@ -374,7 +373,7 @@ class PersonRestControllerMockTest {
     public void getPersonWorkExperienceInvalidIdMockTest() throws DatabaseOperationException {
 
         Person mockPerson = new Person();
-        mockPerson.setId(PersonDaoIntegrationTest.generateInvalidTestId());
+        mockPerson.setId(TestIdGenerator.generateInvalidTestId());
         mockPerson.setSalaryIndex(2.0);
 
         doThrow(DatabaseOperationException.class).when(personService).getPersonById(mockPerson.getId());

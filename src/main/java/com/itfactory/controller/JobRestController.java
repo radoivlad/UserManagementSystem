@@ -84,6 +84,10 @@ public class JobRestController {
     public ResponseEntity<String> updateBaseSalary(@PathVariable String id, @PathVariable String baseSalary){
 
         try{
+            if(baseSalary.toLowerCase().contains("f") || baseSalary.toLowerCase().contains("d")) {
+                throw new DatabaseOperationException("Invalid Input for Base Salary - Please insert numeric values (minimum 500).");
+            }
+
             jobService.updateBaseSalary(Integer.parseInt(id), Double.parseDouble(baseSalary));
             return ResponseEntity.status(HttpStatus.OK).body("Job base salary updated successfully.");
         } catch (DatabaseOperationException | NumberFormatException e) {

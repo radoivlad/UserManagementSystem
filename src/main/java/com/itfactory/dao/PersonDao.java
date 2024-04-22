@@ -6,13 +6,12 @@ import com.itfactory.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.itfactory.dao.ConstantsDao.*;
 
 /**
  * PersonDao contains the database manipulation functionality (CRUD) for our person database;
@@ -25,11 +24,21 @@ public class PersonDao{
     //Creating the Logger, to log messages regarding the different application execution steps;
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonDao.class);
 
+    //Calling the database connection values from application.properties, by use of @Value;
+    @Value("${db.url}")
+    private String DB_URL;
+
+    @Value("${db.user}")
+    private String DB_USER;
+
+    @Value("${db.pass}")
+    private String DB_PASS;
+
     //Creating CRUD (Create, Read, Update, Delete) methods for our person database;
     public Person getPersonById(int id) throws DatabaseOperationException {
 
         try {
-            //Creating a connection to the database, using the URL, USER and PASS imported from ConstantsDao class;
+            //Creating a connection to the database, using the URL, USER and PASS established above;
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             LOGGER.info("Connected to MySQL database;");
 
